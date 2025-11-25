@@ -1,0 +1,978 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		653A08432436FB5200BDC2A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65EA11B92436F91200C99C3B /* StoreKit.framework */; };
+		655D22DD28B46840004037FC /* AppReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655D22DC28B46840004037FC /* AppReducerTests.swift */; };
+		655E912A28ACCA6200554EE8 /* PassphraseSettingsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 655E912928ACCA6200554EE8 /* PassphraseSettingsFeature */; };
+		65B46CB024318E7A00620D88 /* DiceGenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B46CAF24318E7A00620D88 /* DiceGenTests.swift */; };
+		65B46CBB24318E7A00620D88 /* DiceGenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B46CBA24318E7A00620D88 /* DiceGenUITests.swift */; };
+		65F2AFAF28BB4B3200218C89 /* StoreClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF5D28BB4B3200218C89 /* StoreClient.swift */; };
+		65F2AFB028BB4B3200218C89 /* DiceGenProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF5E28BB4B3200218C89 /* DiceGenProducts.swift */; };
+		65F2AFD228BB4B3200218C89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65F2AF8228BB4B3200218C89 /* Assets.xcassets */; };
+		65F2AFD328BB4B3200218C89 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65F2AF8428BB4B3200218C89 /* Preview Assets.xcassets */; };
+		65F2AFD428BB4B3200218C89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65F2AF8528BB4B3200218C89 /* LaunchScreen.storyboard */; };
+		65F2AFD528BB4B3200218C89 /* InAppReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF8828BB4B3200218C89 /* InAppReviewManager.swift */; };
+		65F2AFD628BB4B3200218C89 /* View+Centered.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF8A28BB4B3200218C89 /* View+Centered.swift */; };
+		65F2AFD728BB4B3200218C89 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF8C28BB4B3200218C89 /* Constants.swift */; };
+		65F2AFD828BB4B3200218C89 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF8D28BB4B3200218C89 /* UserDefault.swift */; };
+		65F2AFD928BB4B3200218C89 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF8E28BB4B3200218C89 /* UserSettings.swift */; };
+		65F2AFDA28BB4B3200218C89 /* HistoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF8F28BB4B3200218C89 /* HistoryStorage.swift */; };
+		65F2AFDB28BB4B3200218C89 /* SavedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9028BB4B3200218C89 /* SavedItem.swift */; };
+		65F2AFDC28BB4B3200218C89 /* SettingsEmailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9328BB4B3200218C89 /* SettingsEmailButton.swift */; };
+		65F2AFDD28BB4B3200218C89 /* SettingsLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9428BB4B3200218C89 /* SettingsLinkButton.swift */; };
+		65F2AFDE28BB4B3200218C89 /* PassphraseText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9528BB4B3200218C89 /* PassphraseText.swift */; };
+		65F2AFDF28BB4B3200218C89 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9628BB4B3200218C89 /* SectionHeader.swift */; };
+		65F2AFE028BB4B3200218C89 /* WordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9828BB4B3200218C89 /* WordList.swift */; };
+		65F2AFE128BB4B3200218C89 /* SpecialCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9928BB4B3200218C89 /* SpecialCharacter.swift */; };
+		65F2AFE228BB4B3200218C89 /* WordListIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9A28BB4B3200218C89 /* WordListIdentifier.swift */; };
+		65F2AFE328BB4B3200218C89 /* PassphraseGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9B28BB4B3200218C89 /* PassphraseGenerator.swift */; };
+		65F2AFE428BB4B3200218C89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9D28BB4B3200218C89 /* AppDelegate.swift */; };
+		65F2AFE528BB4B3200218C89 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF9E28BB4B3200218C89 /* SceneDelegate.swift */; };
+		65F2AFE728BB4B3200218C89 /* PassphraseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFA128BB4B3200218C89 /* PassphraseHistoryView.swift */; };
+		65F2AFE928BB4B3200218C89 /* TipJarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFA328BB4B3200218C89 /* TipJarView.swift */; };
+		65F2AFEA28BB4B3200218C89 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFA428BB4B3200218C89 /* SettingsView.swift */; };
+		65F2AFEB28BB4B3200218C89 /* SelectWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFA528BB4B3200218C89 /* SelectWordListView.swift */; };
+		65F2AFEC28BB4B3200218C89 /* SelectSpecialCharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFA628BB4B3200218C89 /* SelectSpecialCharactersView.swift */; };
+		65F2AFEE28BB4B3200218C89 /* PassphraseGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFA828BB4B3200218C89 /* PassphraseGeneratorView.swift */; };
+		65F2AFEF28BB4B3200218C89 /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFA928BB4B3200218C89 /* AcknowledgementsView.swift */; };
+		65F2AFF028BB4B3200218C89 /* SecureContentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFAA28BB4B3200218C89 /* SecureContentInfoView.swift */; };
+		65F2AFF128BB4B3200218C89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFAB28BB4B3200218C89 /* ContentView.swift */; };
+		65F2AFF228BB4B3200218C89 /* MailComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFAC28BB4B3200218C89 /* MailComposeView.swift */; };
+		65F2AFF528BB4D7400218C89 /* WordLists in Resources */ = {isa = PBXBuildFile; fileRef = 65F2AFF428BB4D7400218C89 /* WordLists */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		65B46CAC24318E7A00620D88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65B46C8D24318E7800620D88 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65B46C9424318E7800620D88;
+			remoteInfo = DiceGen;
+		};
+		65B46CB724318E7A00620D88 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65B46C8D24318E7800620D88 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65B46C9424318E7800620D88;
+			remoteInfo = DiceGen;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		655D22DC28B46840004037FC /* AppReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducerTests.swift; sourceTree = "<group>"; };
+		655E911928ACCA4B00554EE8 /* PassphraseSettingsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PassphraseSettingsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		65B46C9524318E7800620D88 /* DiceGen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiceGen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		65B46CAB24318E7A00620D88 /* DiceGenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiceGenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		65B46CAF24318E7A00620D88 /* DiceGenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceGenTests.swift; sourceTree = "<group>"; };
+		65B46CB124318E7A00620D88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65B46CB624318E7A00620D88 /* DiceGenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiceGenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		65B46CBA24318E7A00620D88 /* DiceGenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceGenUITests.swift; sourceTree = "<group>"; };
+		65B46CBC24318E7A00620D88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65EA11B92436F91200C99C3B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		65F2AF5D28BB4B3200218C89 /* StoreClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreClient.swift; sourceTree = "<group>"; };
+		65F2AF5E28BB4B3200218C89 /* DiceGenProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiceGenProducts.swift; sourceTree = "<group>"; };
+		65F2AF8228BB4B3200218C89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		65F2AF8428BB4B3200218C89 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		65F2AF8628BB4B3200218C89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		65F2AF8828BB4B3200218C89 /* InAppReviewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppReviewManager.swift; sourceTree = "<group>"; };
+		65F2AF8A28BB4B3200218C89 /* View+Centered.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Centered.swift"; sourceTree = "<group>"; };
+		65F2AF8C28BB4B3200218C89 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		65F2AF8D28BB4B3200218C89 /* UserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
+		65F2AF8E28BB4B3200218C89 /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		65F2AF8F28BB4B3200218C89 /* HistoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryStorage.swift; sourceTree = "<group>"; };
+		65F2AF9028BB4B3200218C89 /* SavedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedItem.swift; sourceTree = "<group>"; };
+		65F2AF9128BB4B3200218C89 /* DiceGen.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = DiceGen.entitlements; sourceTree = "<group>"; };
+		65F2AF9328BB4B3200218C89 /* SettingsEmailButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsEmailButton.swift; sourceTree = "<group>"; };
+		65F2AF9428BB4B3200218C89 /* SettingsLinkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLinkButton.swift; sourceTree = "<group>"; };
+		65F2AF9528BB4B3200218C89 /* PassphraseText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassphraseText.swift; sourceTree = "<group>"; };
+		65F2AF9628BB4B3200218C89 /* SectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		65F2AF9828BB4B3200218C89 /* WordList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordList.swift; sourceTree = "<group>"; };
+		65F2AF9928BB4B3200218C89 /* SpecialCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialCharacter.swift; sourceTree = "<group>"; };
+		65F2AF9A28BB4B3200218C89 /* WordListIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordListIdentifier.swift; sourceTree = "<group>"; };
+		65F2AF9B28BB4B3200218C89 /* PassphraseGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassphraseGenerator.swift; sourceTree = "<group>"; };
+		65F2AF9D28BB4B3200218C89 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		65F2AF9E28BB4B3200218C89 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		65F2AFA128BB4B3200218C89 /* PassphraseHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassphraseHistoryView.swift; sourceTree = "<group>"; };
+		65F2AFA328BB4B3200218C89 /* TipJarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipJarView.swift; sourceTree = "<group>"; };
+		65F2AFA428BB4B3200218C89 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		65F2AFA528BB4B3200218C89 /* SelectWordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectWordListView.swift; sourceTree = "<group>"; };
+		65F2AFA628BB4B3200218C89 /* SelectSpecialCharactersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSpecialCharactersView.swift; sourceTree = "<group>"; };
+		65F2AFA828BB4B3200218C89 /* PassphraseGeneratorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassphraseGeneratorView.swift; sourceTree = "<group>"; };
+		65F2AFA928BB4B3200218C89 /* AcknowledgementsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcknowledgementsView.swift; sourceTree = "<group>"; };
+		65F2AFAA28BB4B3200218C89 /* SecureContentInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureContentInfoView.swift; sourceTree = "<group>"; };
+		65F2AFAB28BB4B3200218C89 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		65F2AFAC28BB4B3200218C89 /* MailComposeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailComposeView.swift; sourceTree = "<group>"; };
+		65F2AFAD28BB4B3200218C89 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65F2AFF428BB4D7400218C89 /* WordLists */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WordLists; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		655E911628ACCA4B00554EE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				655E912A28ACCA6200554EE8 /* PassphraseSettingsFeature in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B46C9224318E7800620D88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				653A08432436FB5200BDC2A4 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B46CA824318E7A00620D88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B46CB324318E7A00620D88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		65B46C8C24318E7800620D88 = {
+			isa = PBXGroup;
+			children = (
+				65F2AF5A28BB4B3200218C89 /* DiceGen */,
+				65B46CAE24318E7A00620D88 /* DiceGenTests */,
+				65B46CB924318E7A00620D88 /* DiceGenUITests */,
+				65EA11B62436B9CD00C99C3B /* Frameworks */,
+				65B46C9624318E7800620D88 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		65B46C9624318E7800620D88 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65B46C9524318E7800620D88 /* DiceGen.app */,
+				65B46CAB24318E7A00620D88 /* DiceGenTests.xctest */,
+				65B46CB624318E7A00620D88 /* DiceGenUITests.xctest */,
+				655E911928ACCA4B00554EE8 /* PassphraseSettingsApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65B46CAE24318E7A00620D88 /* DiceGenTests */ = {
+			isa = PBXGroup;
+			children = (
+				65B46CAF24318E7A00620D88 /* DiceGenTests.swift */,
+				655D22DC28B46840004037FC /* AppReducerTests.swift */,
+				65B46CB124318E7A00620D88 /* Info.plist */,
+			);
+			path = DiceGenTests;
+			sourceTree = "<group>";
+		};
+		65B46CB924318E7A00620D88 /* DiceGenUITests */ = {
+			isa = PBXGroup;
+			children = (
+				65B46CBA24318E7A00620D88 /* DiceGenUITests.swift */,
+				65B46CBC24318E7A00620D88 /* Info.plist */,
+			);
+			path = DiceGenUITests;
+			sourceTree = "<group>";
+		};
+		65EA11B62436B9CD00C99C3B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65EA11B92436F91200C99C3B /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65F2AF5A28BB4B3200218C89 /* DiceGen */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AF9C28BB4B3200218C89 /* AppDelegate */,
+				65F2AF9228BB4B3200218C89 /* Components */,
+				65F2AF9128BB4B3200218C89 /* DiceGen.entitlements */,
+				65F2AF8928BB4B3200218C89 /* Extensions */,
+				65F2AF9728BB4B3200218C89 /* Generators */,
+				65F2AF5B28BB4B3200218C89 /* InAppPurchases */,
+				65F2AF8728BB4B3200218C89 /* InAppReview */,
+				65F2AFAD28BB4B3200218C89 /* Info.plist */,
+				65F2AF5F28BB4B3200218C89 /* Resources */,
+				65F2AF8B28BB4B3200218C89 /* Utilities */,
+				65F2AF9F28BB4B3200218C89 /* Views */,
+			);
+			path = DiceGen;
+			sourceTree = "<group>";
+		};
+		65F2AF5B28BB4B3200218C89 /* InAppPurchases */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AF5D28BB4B3200218C89 /* StoreClient.swift */,
+				65F2AF5E28BB4B3200218C89 /* DiceGenProducts.swift */,
+			);
+			path = InAppPurchases;
+			sourceTree = "<group>";
+		};
+		65F2AF5F28BB4B3200218C89 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AFF428BB4D7400218C89 /* WordLists */,
+				65F2AF8228BB4B3200218C89 /* Assets.xcassets */,
+				65F2AF8328BB4B3200218C89 /* Preview Content */,
+				65F2AF8528BB4B3200218C89 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		65F2AF8328BB4B3200218C89 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AF8428BB4B3200218C89 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		65F2AF8728BB4B3200218C89 /* InAppReview */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AF8828BB4B3200218C89 /* InAppReviewManager.swift */,
+			);
+			path = InAppReview;
+			sourceTree = "<group>";
+		};
+		65F2AF8928BB4B3200218C89 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AF8A28BB4B3200218C89 /* View+Centered.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		65F2AF8B28BB4B3200218C89 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AF8C28BB4B3200218C89 /* Constants.swift */,
+				65F2AF8D28BB4B3200218C89 /* UserDefault.swift */,
+				65F2AF8E28BB4B3200218C89 /* UserSettings.swift */,
+				65F2AF8F28BB4B3200218C89 /* HistoryStorage.swift */,
+				65F2AF9028BB4B3200218C89 /* SavedItem.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		65F2AF9228BB4B3200218C89 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AF9328BB4B3200218C89 /* SettingsEmailButton.swift */,
+				65F2AF9428BB4B3200218C89 /* SettingsLinkButton.swift */,
+				65F2AF9528BB4B3200218C89 /* PassphraseText.swift */,
+				65F2AF9628BB4B3200218C89 /* SectionHeader.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		65F2AF9728BB4B3200218C89 /* Generators */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AF9828BB4B3200218C89 /* WordList.swift */,
+				65F2AF9928BB4B3200218C89 /* SpecialCharacter.swift */,
+				65F2AF9A28BB4B3200218C89 /* WordListIdentifier.swift */,
+				65F2AF9B28BB4B3200218C89 /* PassphraseGenerator.swift */,
+			);
+			path = Generators;
+			sourceTree = "<group>";
+		};
+		65F2AF9C28BB4B3200218C89 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AF9D28BB4B3200218C89 /* AppDelegate.swift */,
+				65F2AF9E28BB4B3200218C89 /* SceneDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		65F2AF9F28BB4B3200218C89 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				65F2AFA928BB4B3200218C89 /* AcknowledgementsView.swift */,
+				65F2AFAB28BB4B3200218C89 /* ContentView.swift */,
+				65F2AFAC28BB4B3200218C89 /* MailComposeView.swift */,
+				65F2AFA828BB4B3200218C89 /* PassphraseGeneratorView.swift */,
+				65F2AFA128BB4B3200218C89 /* PassphraseHistoryView.swift */,
+				65F2AFAA28BB4B3200218C89 /* SecureContentInfoView.swift */,
+				65F2AFA628BB4B3200218C89 /* SelectSpecialCharactersView.swift */,
+				65F2AFA528BB4B3200218C89 /* SelectWordListView.swift */,
+				65F2AFA428BB4B3200218C89 /* SettingsView.swift */,
+				65F2AFA328BB4B3200218C89 /* TipJarView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		655E911828ACCA4B00554EE8 /* PassphraseSettingsApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 655E912728ACCA4D00554EE8 /* Build configuration list for PBXNativeTarget "PassphraseSettingsApp" */;
+			buildPhases = (
+				655E911528ACCA4B00554EE8 /* Sources */,
+				655E911628ACCA4B00554EE8 /* Frameworks */,
+				655E911728ACCA4B00554EE8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PassphraseSettingsApp;
+			packageProductDependencies = (
+				655E912928ACCA6200554EE8 /* PassphraseSettingsFeature */,
+			);
+			productName = PassphraseSettingsApp;
+			productReference = 655E911928ACCA4B00554EE8 /* PassphraseSettingsApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		65B46C9424318E7800620D88 /* DiceGen */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65B46CBF24318E7A00620D88 /* Build configuration list for PBXNativeTarget "DiceGen" */;
+			buildPhases = (
+				65B46C9124318E7800620D88 /* Sources */,
+				65B46C9224318E7800620D88 /* Frameworks */,
+				65B46C9324318E7800620D88 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DiceGen;
+			packageProductDependencies = (
+			);
+			productName = DiceGen;
+			productReference = 65B46C9524318E7800620D88 /* DiceGen.app */;
+			productType = "com.apple.product-type.application";
+		};
+		65B46CAA24318E7A00620D88 /* DiceGenTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65B46CC224318E7A00620D88 /* Build configuration list for PBXNativeTarget "DiceGenTests" */;
+			buildPhases = (
+				65B46CA724318E7A00620D88 /* Sources */,
+				65B46CA824318E7A00620D88 /* Frameworks */,
+				65B46CA924318E7A00620D88 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65B46CAD24318E7A00620D88 /* PBXTargetDependency */,
+			);
+			name = DiceGenTests;
+			productName = DiceGenTests;
+			productReference = 65B46CAB24318E7A00620D88 /* DiceGenTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		65B46CB524318E7A00620D88 /* DiceGenUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65B46CC524318E7A00620D88 /* Build configuration list for PBXNativeTarget "DiceGenUITests" */;
+			buildPhases = (
+				65B46CB224318E7A00620D88 /* Sources */,
+				65B46CB324318E7A00620D88 /* Frameworks */,
+				65B46CB424318E7A00620D88 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65B46CB824318E7A00620D88 /* PBXTargetDependency */,
+			);
+			name = DiceGenUITests;
+			productName = DiceGenUITests;
+			productReference = 65B46CB624318E7A00620D88 /* DiceGenUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		65B46C8D24318E7800620D88 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				ORGANIZATIONNAME = "Daniel Byon";
+				TargetAttributes = {
+					655E911828ACCA4B00554EE8 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+					65B46C9424318E7800620D88 = {
+						CreatedOnToolsVersion = 11.4;
+						LastSwiftMigration = 1400;
+					};
+					65B46CAA24318E7A00620D88 = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = 65B46C9424318E7800620D88;
+					};
+					65B46CB524318E7A00620D88 = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = 65B46C9424318E7800620D88;
+					};
+				};
+			};
+			buildConfigurationList = 65B46C9024318E7800620D88 /* Build configuration list for PBXProject "DiceGen" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 65B46C8C24318E7800620D88;
+			packageReferences = (
+			);
+			productRefGroup = 65B46C9624318E7800620D88 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				65B46C9424318E7800620D88 /* DiceGen */,
+				65B46CAA24318E7A00620D88 /* DiceGenTests */,
+				65B46CB524318E7A00620D88 /* DiceGenUITests */,
+				655E911828ACCA4B00554EE8 /* PassphraseSettingsApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		655E911728ACCA4B00554EE8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B46C9324318E7800620D88 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65F2AFF528BB4D7400218C89 /* WordLists in Resources */,
+				65F2AFD228BB4B3200218C89 /* Assets.xcassets in Resources */,
+				65F2AFD428BB4B3200218C89 /* LaunchScreen.storyboard in Resources */,
+				65F2AFD328BB4B3200218C89 /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B46CA924318E7A00620D88 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B46CB424318E7A00620D88 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		655E911528ACCA4B00554EE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B46C9124318E7800620D88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65F2AFE928BB4B3200218C89 /* TipJarView.swift in Sources */,
+				65F2AFF128BB4B3200218C89 /* ContentView.swift in Sources */,
+				65F2AFDB28BB4B3200218C89 /* SavedItem.swift in Sources */,
+				65F2AFD528BB4B3200218C89 /* InAppReviewManager.swift in Sources */,
+				65F2AFE428BB4B3200218C89 /* AppDelegate.swift in Sources */,
+				65F2AFD828BB4B3200218C89 /* UserDefault.swift in Sources */,
+				65F2AFE328BB4B3200218C89 /* PassphraseGenerator.swift in Sources */,
+				65F2AFAF28BB4B3200218C89 /* StoreClient.swift in Sources */,
+				65F2AFF228BB4B3200218C89 /* MailComposeView.swift in Sources */,
+				65F2AFB028BB4B3200218C89 /* DiceGenProducts.swift in Sources */,
+				65F2AFD628BB4B3200218C89 /* View+Centered.swift in Sources */,
+				65F2AFEF28BB4B3200218C89 /* AcknowledgementsView.swift in Sources */,
+				65F2AFDE28BB4B3200218C89 /* PassphraseText.swift in Sources */,
+				65F2AFE228BB4B3200218C89 /* WordListIdentifier.swift in Sources */,
+				65F2AFF028BB4B3200218C89 /* SecureContentInfoView.swift in Sources */,
+				65F2AFEC28BB4B3200218C89 /* SelectSpecialCharactersView.swift in Sources */,
+				65F2AFDD28BB4B3200218C89 /* SettingsLinkButton.swift in Sources */,
+				65F2AFD928BB4B3200218C89 /* UserSettings.swift in Sources */,
+				65F2AFEA28BB4B3200218C89 /* SettingsView.swift in Sources */,
+				65F2AFDC28BB4B3200218C89 /* SettingsEmailButton.swift in Sources */,
+				65F2AFDF28BB4B3200218C89 /* SectionHeader.swift in Sources */,
+				65F2AFEE28BB4B3200218C89 /* PassphraseGeneratorView.swift in Sources */,
+				65F2AFE528BB4B3200218C89 /* SceneDelegate.swift in Sources */,
+				65F2AFD728BB4B3200218C89 /* Constants.swift in Sources */,
+				65F2AFDA28BB4B3200218C89 /* HistoryStorage.swift in Sources */,
+				65F2AFEB28BB4B3200218C89 /* SelectWordListView.swift in Sources */,
+				65F2AFE028BB4B3200218C89 /* WordList.swift in Sources */,
+				65F2AFE128BB4B3200218C89 /* SpecialCharacter.swift in Sources */,
+				65F2AFE728BB4B3200218C89 /* PassphraseHistoryView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B46CA724318E7A00620D88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				655D22DD28B46840004037FC /* AppReducerTests.swift in Sources */,
+				65B46CB024318E7A00620D88 /* DiceGenTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65B46CB224318E7A00620D88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65B46CBB24318E7A00620D88 /* DiceGenUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		65B46CAD24318E7A00620D88 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65B46C9424318E7800620D88 /* DiceGen */;
+			targetProxy = 65B46CAC24318E7A00620D88 /* PBXContainerItemProxy */;
+		};
+		65B46CB824318E7A00620D88 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65B46C9424318E7800620D88 /* DiceGen */;
+			targetProxy = 65B46CB724318E7A00620D88 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		65F2AF8528BB4B3200218C89 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65F2AF8628BB4B3200218C89 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		655E912528ACCA4D00554EE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = PassphraseSettingsApp/PassphraseSettingsApp.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"PassphraseSettingsApp/Preview Content\"";
+				DEVELOPMENT_TEAM = HSX7X97PF8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PassphraseSettingsApp/Info.plist;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danielbyon.PassphraseSettingsApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		655E912628ACCA4D00554EE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = PassphraseSettingsApp/PassphraseSettingsApp.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"PassphraseSettingsApp/Preview Content\"";
+				DEVELOPMENT_TEAM = HSX7X97PF8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PassphraseSettingsApp/Info.plist;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danielbyon.PassphraseSettingsApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		65B46CBD24318E7A00620D88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		65B46CBE24318E7A00620D88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		65B46CC024318E7A00620D88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = DiceGen/DiceGen.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_ASSET_PATHS = "\"DiceGen/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = HSX7X97PF8;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = DiceGen/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DanielByon.DiceGen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		65B46CC124318E7A00620D88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = DiceGen/DiceGen.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_ASSET_PATHS = "\"DiceGen/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = HSX7X97PF8;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = DiceGen/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DanielByon.DiceGen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		65B46CC324318E7A00620D88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HSX7X97PF8;
+				INFOPLIST_FILE = DiceGenTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danielbyon.DiceGenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiceGen.app/DiceGen";
+			};
+			name = Debug;
+		};
+		65B46CC424318E7A00620D88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HSX7X97PF8;
+				INFOPLIST_FILE = DiceGenTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danielbyon.DiceGenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiceGen.app/DiceGen";
+			};
+			name = Release;
+		};
+		65B46CC624318E7A00620D88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HSX7X97PF8;
+				INFOPLIST_FILE = DiceGenUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danielbyon.DiceGenUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DiceGen;
+			};
+			name = Debug;
+		};
+		65B46CC724318E7A00620D88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HSX7X97PF8;
+				INFOPLIST_FILE = DiceGenUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danielbyon.DiceGenUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DiceGen;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		655E912728ACCA4D00554EE8 /* Build configuration list for PBXNativeTarget "PassphraseSettingsApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				655E912528ACCA4D00554EE8 /* Debug */,
+				655E912628ACCA4D00554EE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65B46C9024318E7800620D88 /* Build configuration list for PBXProject "DiceGen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65B46CBD24318E7A00620D88 /* Debug */,
+				65B46CBE24318E7A00620D88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65B46CBF24318E7A00620D88 /* Build configuration list for PBXNativeTarget "DiceGen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65B46CC024318E7A00620D88 /* Debug */,
+				65B46CC124318E7A00620D88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65B46CC224318E7A00620D88 /* Build configuration list for PBXNativeTarget "DiceGenTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65B46CC324318E7A00620D88 /* Debug */,
+				65B46CC424318E7A00620D88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65B46CC524318E7A00620D88 /* Build configuration list for PBXNativeTarget "DiceGenUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65B46CC624318E7A00620D88 /* Debug */,
+				65B46CC724318E7A00620D88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		655E912928ACCA6200554EE8 /* PassphraseSettingsFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PassphraseSettingsFeature;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 65B46C8D24318E7800620D88 /* Project object */;
+}
