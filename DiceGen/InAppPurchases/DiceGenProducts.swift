@@ -1,25 +1,23 @@
 //
-//  DiceGenProduct.swift
+//  DiceGenProducts.swift
 //  DiceGen
-//
-//  Created by Daniel Byon on 4/3/20.
-//  Copyright © 2020 Daniel Byon. All rights reserved.
 //
 
 import Foundation
 
-struct DiceGenProduct {
+enum DiceGenProduct {
+    static let smallTip = "smallTip"
+    static let mediumTip = "mediumTip"
+    static let largeTip = "largeTip"
 
-    static let smallTip: ProductIdentifier = "smallTip"
-    static let mediumTip: ProductIdentifier = "mediumTip"
-    static let largeTip: ProductIdentifier = "largeTip"
+    static let allIdentifiers: Set<String> = [smallTip, mediumTip, largeTip]
 
-    static let allProducts: Set<ProductIdentifier> = [
-        smallTip,
-        mediumTip,
-        largeTip
-    ]
-
-    static let store = StoreClient(productIdentifiers: allProducts)
-
+    static func emojiSuffix(for productIdentifier: String) -> String {
+        switch productIdentifier {
+        case smallTip: return " 🍫"
+        case mediumTip: return " ☕️"
+        case largeTip: return " 🍕"
+        default: return ""
+        }
+    }
 }

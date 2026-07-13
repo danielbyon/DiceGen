@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum WordListIdentifier: String, CaseIterable {
+enum WordListIdentifier: String, CaseIterable, Hashable, Sendable {
 
     case catalan
     case chinesePinyin
@@ -45,14 +45,6 @@ extension WordListIdentifier: Comparable {
 
     static func < (lhs: WordListIdentifier, rhs: WordListIdentifier) -> Bool {
         lhs.title < rhs.title
-    }
-
-}
-
-extension WordListIdentifier: Equatable {
-
-    static func == (lhs: WordListIdentifier, rhs: WordListIdentifier) -> Bool {
-        lhs.title == rhs.title
     }
 
 }

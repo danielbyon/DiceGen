@@ -2,50 +2,30 @@
 //  SettingsView.swift
 //  DiceGen
 //
-//  Created by Daniel Byon on 3/30/20.
-//  Copyright © 2020 Daniel Byon. All rights reserved.
-//
 
 import SwiftUI
 
 struct SettingsView: View {
-
-    @Environment(\.presentationMode) var presentation
-    @EnvironmentObject var historyStorage: HistoryStorage
-    @EnvironmentObject var userSettings: UserSettings
+    @Environment(\.dismiss) private var dismiss
 
     private let urls: [(title: String, url: URL)] = [
-        ("Write a review", URL(string: "https://www.example.com")!),
-        ("See more apps", URL(string: "https://www.example.com")!)
+        ("Write a review", URL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=980521593&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software ")!),
+        ("See more apps", URL(string: "https://apps.apple.com/us/developer/daniel-byon/id309681721")!)
     ]
 
     private let emails: [(title: String, emailAddress: String, subject: String)] = [
-        ("Report a bug", "bugreport@example.com", "DiceGen Bug Report" + Self.emailSubjectSuffix),
-        ("Request a feature", "featurerequest@example.com", "DiceGen Feature Request" + Self.emailSubjectSuffix),
-        ("General feedback", "contact@example.com", "DiceGen Feedback" + Self.emailSubjectSuffix)
+        ("Report a bug", "bugreport@danielbyon.com", "DiceGen Bug Report" + Self.emailSubjectSuffix),
+        ("Request a feature", "featurerequest@danielbyon.com", "DiceGen Feature Request" + Self.emailSubjectSuffix),
+        ("General feedback", "contact@danielbyon.com", "DiceGen Feedback" + Self.emailSubjectSuffix)
     ]
 
     private static var emailSubjectSuffix: String {
-        guard let version = DiceGenConstants.appVersion else {
-            return ""
-        }
+        guard let version = DiceGenConstants.appVersion else { return "" }
         return ": v\(version)"
     }
 
     var body: some View {
         Form {
-            Section {
-                Toggle(isOn: $historyStorage.shouldSaveItems) {
-                    Text("Save copied passphrases/passwords")
-                }
-                if !historyStorage.isEmpty {
-                    Button(action: {
-                        self.historyStorage.savedItems = []
-                    }) {
-                        Text("Clear passphrase/password history")
-                    }
-                }
-            }
             Section {
                 ForEach(emails, id: \.title) {
                     SettingsEmailButton(title: $0.title, emailAddress: $0.emailAddress, subject: $0.subject)
@@ -57,49 +37,41 @@ struct SettingsView: View {
                 }
             }
             Section(footer: AppInfo()) {
-                NavigationLink(destination: TipJarView()) {
-                    Text("Why are there no ads in this app?")
+                NavigationLink("Why are there no ads in this app?") {
+                    TipJarView()
                 }
-                NavigationLink(destination: AcknowledgementsView()) {
-                    Text("Acknowledgements")
+                NavigationLink("Acknowledgements") {
+                    AcknowledgementsView()
                 }
             }
         }
-        .navigationBarTitle("Settings")
-        .navigationBarItems(leading: Button(action: {
-            self.presentation.wrappedValue.dismiss()
-        }, label: {
-            Text("Done")
+        .navigationTitle("Settings")
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Done") {
+                    dismiss()
+                }
                 .bold()
-                .padding([.trailing, .vertical])
-        }))
+            }
+        }
     }
-
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
+        NavigationStack {
             SettingsView()
-                .environmentObject(HistoryStorage())
-                .environmentObject(UserSettings())
         }
+        .environmentObject(TipStore(client: StoreKitClient(), startTransactionListener: false))
     }
 }
 
 struct AppInfo: View {
-
     private var buildInfo: String {
         var string = ""
-        if let appName = DiceGenConstants.appName {
-            string += appName
-        }
-        if let appVersion = DiceGenConstants.appVersion {
-            string += " \(appVersion)"
-        }
-        if let buildVersion = DiceGenConstants.buildVersion {
-            string += " (Build \(buildVersion))"
-        }
+        if let appName = DiceGenConstants.appName { string += appName }
+        if let appVersion = DiceGenConstants.appVersion { string += " \(appVersion)" }
+        if let buildVersion = DiceGenConstants.buildVersion { string += " (Build \(buildVersion))" }
         return string
     }
 

@@ -17,7 +17,9 @@ struct MailComposeView: UIViewControllerRepresentable {
     @Binding var isShowing: Bool
     @Binding var result: Result<MFMailComposeResult, Error>?
 
-    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
+    /// MessageUI invokes its delegate on the main thread but the imported protocol lacks actor isolation.
+    @MainActor
+    final class Coordinator: NSObject, @preconcurrency MFMailComposeViewControllerDelegate {
 
         @Binding var isShowing: Bool
         @Binding var result: Result<MFMailComposeResult, Error>?

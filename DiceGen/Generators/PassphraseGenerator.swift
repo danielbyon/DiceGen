@@ -2,110 +2,130 @@
 //  PassphraseGenerator.swift
 //  DiceGen
 //
-//  Created by Daniel Byon on 3/29/20.
-//  Copyright © 2020 Daniel Byon. All rights reserved.
-//
 
+import Combine
 import Foundation
 
-// MARK: - PassphraseGenerator
-final class PassphraseGenerator: ObservableObject {
+enum PassphraseConstraints {
+    static let numberOfWords = 3...50
+}
 
+struct PassphraseGenerationOptions: Equatable, Hashable, Sendable {
+    let wordListIdentifier: WordListIdentifier
+    let numberOfWords: Int
+    let capitalizeWords: Bool
+    let includeRandomNumber: Bool
+    let includeRandomSpecialCharacter: Bool
+    let validSpecialCharacters: String
+    let wordSeparator: String
+}
+
+protocol RandomIntegerSource: Sendable {
+    func integer(in range: ClosedRange<Int>) -> Int
+}
+
+struct SystemRandomIntegerSource: RandomIntegerSource {
+    func integer(in range: ClosedRange<Int>) -> Int {
+        Int.random(in: range)
+    }
+}
+
+struct LowerBoundRandomIntegerSource: RandomIntegerSource {
+    func integer(in range: ClosedRange<Int>) -> Int {
+        range.lowerBound
+    }
+}
+
+extension String {
+    /// Uppercases only the first grapheme so capitalization never rewrites the remainder of a word-list entry.
+    func uppercasingFirstGrapheme() -> String {
+        guard let first else { return self }
+        return first.uppercased() + String(dropFirst())
+    }
+}
+
+struct PassphraseGeneratorEngine {
+    func generate(
+        options: PassphraseGenerationOptions,
+        wordList: WordList,
+        randomSource: any RandomIntegerSource
+    ) -> String {
+        precondition(PassphraseConstraints.numberOfWords.contains(options.numberOfWords))
+        precondition(options.wordListIdentifier == wordList.identifier)
+
+        let numberInsertion = options.includeRandomNumber
+            ? (randomSource.integer(in: 0...(options.numberOfWords - 1)), randomSource.integer(in: 0...9))
+            : nil
+
+        let specialCharacters = Array(options.validSpecialCharacters)
+        let specialInsertion: (Int, Character)?
+        if options.includeRandomSpecialCharacter, !specialCharacters.isEmpty {
+            specialInsertion = (
+                randomSource.integer(in: 0...(options.numberOfWords - 1)),
+                specialCharacters[randomSource.integer(in: 0...(specialCharacters.count - 1))]
+            )
+        } else {
+            specialInsertion = nil
+        }
+
+        return (0..<options.numberOfWords).map { index in
+            var key = 0
+            for _ in 0..<wordList.numberOfRollsPerWord {
+                key = key * 10 + randomSource.integer(in: 1...6)
+            }
+
+            var word = wordList.word(for: key)
+            if options.capitalizeWords {
+                word = word.uppercasingFirstGrapheme()
+            }
+            if let numberInsertion, numberInsertion.0 == index {
+                word += String(numberInsertion.1)
+            }
+            if let specialInsertion, specialInsertion.0 == index {
+                word.append(specialInsertion.1)
+            }
+            return word
+        }
+        .joined(separator: options.wordSeparator)
+    }
+}
+
+@MainActor
+final class PassphraseGenerator: ObservableObject {
     @Published private(set) var passphrase = ""
 
-    private let wordGenerator: WordGenerator
-    private let numberOfWords: Int
-    private let capitalizeWords: Bool
-    private let includeRandomNumber: Bool
-    private let includeRandomSpecialCharacter: Bool
-    private let validSpecialCharacters: String
-    private let wordSeparator: String
+    private let bundle: Bundle
+    private let engine: PassphraseGeneratorEngine
+    private let randomSource: any RandomIntegerSource
+    private var loadedWordList: WordList?
 
     init(
-        wordListIdentifier: WordListIdentifier,
-        numberOfWords: Int,
-        capitalizeWords: Bool,
-        includeRandomNumber: Bool,
-        includeRandomSpecialCharacter: Bool,
-        validSpecialCharacters: String,
-        wordSeparator: String) {
-        self.wordGenerator = WordGenerator(identifier: wordListIdentifier)
-        self.numberOfWords = numberOfWords
-        self.capitalizeWords = capitalizeWords
-        self.includeRandomNumber = includeRandomNumber
-        self.includeRandomSpecialCharacter = includeRandomSpecialCharacter
-        self.validSpecialCharacters = validSpecialCharacters
-        self.wordSeparator = wordSeparator
-        generatePassphrase()
+        bundle: Bundle = .main,
+        engine: PassphraseGeneratorEngine = PassphraseGeneratorEngine(),
+        randomSource: any RandomIntegerSource = SystemRandomIntegerSource()
+    ) {
+        self.bundle = bundle
+        self.engine = engine
+        self.randomSource = randomSource
     }
 
-    func generatePassphrase() {
-        let randomNumber = generateRandomNumber()
-        let randomSpecialCharacter = generateRandomSpecialCharacter()
-
-        passphrase = (0..<numberOfWords)
-            .map { i in
-                var word = wordGenerator.generateWord()
-                if capitalizeWords {
-                    word = word.capitalized
-                }
-                if let randomNumber = randomNumber, randomNumber.index == i {
-                    word += "\(randomNumber.number)"
-                }
-                if let randomSpecialCharacter = randomSpecialCharacter, randomSpecialCharacter.index == i {
-                    word += randomSpecialCharacter.character
-                }
-                return word
+    func generate(options: PassphraseGenerationOptions) {
+        let wordList: WordList
+        if let loadedWordList, loadedWordList.identifier == options.wordListIdentifier {
+            wordList = loadedWordList
+        } else {
+            do {
+                wordList = try WordListLoader.load(identifier: options.wordListIdentifier, bundle: bundle)
+            } catch {
+                preconditionFailure("Invalid bundled word-list resource: \(error)")
             }
-            .joined(separator: wordSeparator)
-        debugPrint("Generated passphrase: \(passphrase)")
-    }
-
-    private func generateRandomNumber() -> (index: Int, number: Int)? {
-        guard includeRandomNumber else { return nil}
-        let index = Int.random(in: 0..<numberOfWords)
-        let number = Int.random(in: 0...9)
-        return (index, number)
-    }
-
-    private func generateRandomSpecialCharacter() -> (index: Int, character: String)? {
-        guard includeRandomSpecialCharacter, !validSpecialCharacters.isEmpty else { return nil }
-        let index = Int.random(in: 0..<numberOfWords)
-        guard let character = validSpecialCharacters.randomElement() else { return nil }
-        return (index, String(character))
-    }
-
-}
-
-// MARK: - Debug
-extension PassphraseGenerator {
-
-    static let `default` = PassphraseGenerator(
-        wordListIdentifier: .english,
-        numberOfWords: 5,
-        capitalizeWords: false,
-        includeRandomNumber: false,
-        includeRandomSpecialCharacter: false,
-        validSpecialCharacters: "", wordSeparator: " ")
-
-}
-
-// MARK: - WordGenerator
-private struct WordGenerator {
-
-    private let wordList: WordList
-
-    init(identifier: WordListIdentifier) {
-        self.wordList = WordList(identifier: identifier)
-    }
-
-    func generateWord() -> String {
-        var key = 0
-        for _ in 0..<wordList.numberOfRollsPerWord {
-            key *= 10
-            key += Int.random(in: 1...6)
+            loadedWordList = wordList
         }
-        return wordList.words[key]!
-    }
 
+        passphrase = engine.generate(
+            options: options,
+            wordList: wordList,
+            randomSource: randomSource
+        )
+    }
 }

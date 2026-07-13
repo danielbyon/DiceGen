@@ -8,7 +8,6 @@
 
 import Foundation
 
-// ~ ! # $ % ^ & * ( ) - = + [ ] \ { } : ; " ' < > ? /
 enum SpecialCharacter: String, CaseIterable {
 
     case tilde
@@ -57,7 +56,7 @@ enum SpecialCharacter: String, CaseIterable {
         case .plusSign: return "+"
         case .openSquareBracket: return "["
         case .closeSquareBracket: return "]"
-        case .backslash: return "\""
+        case .backslash: return "\\"
         case .openBrace: return "{"
         case .closeBrace: return "}"
         case .colon: return ":"

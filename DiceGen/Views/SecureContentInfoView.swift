@@ -2,24 +2,30 @@
 //  SecureContentInfoView.swift
 //  DiceGen
 //
-//  Created by Daniel Byon on 3/30/20.
-//  Copyright © 2020 Daniel Byon. All rights reserved.
-//
 
 import SwiftUI
 
 struct SecureContentInfoView: View {
-
-    @EnvironmentObject var historyStorage: HistoryStorage
-    @EnvironmentObject var userSettings: UserSettings
-    @ObservedObject var passphraseGenerator: PassphraseGenerator
+    @EnvironmentObject private var passphraseGenerator: PassphraseGenerator
+    @EnvironmentObject private var userSettings: UserSettings
     @State private var showingCopiedMessage = false
+    @State private var copyFeedbackGeneration = 0
+
+    private let copyAction: PassphraseCopyAction
+
+    init(
+        reviewRequester: InAppReviewRequester,
+        clipboardWriter: any PassphraseClipboardWriting = SystemPassphraseClipboardWriter()
+    ) {
+        copyAction = PassphraseCopyAction(
+            clipboardWriter: clipboardWriter,
+            reviewRequester: reviewRequester
+        )
+    }
 
     private var copyButtonTitle: String {
         showingCopiedMessage ? "Copied!" : "Copy to Clipboard"
     }
-
-    private let copiedMessageDismissDelay: TimeInterval = 1.0
 
     var body: some View {
         Section {
@@ -31,39 +37,34 @@ struct SecureContentInfoView: View {
                         .font(.system(.caption, design: .monospaced))
                 }
             }
-            Button(action: {
-                self.passphraseGenerator.generatePassphrase()
-            }) {
-                Text("Generate Passphrase")
-                    .centered()
+            Button("Generate Passphrase") {
+                passphraseGenerator.generate(options: userSettings.generationOptions)
             }
-            Button(action: {
-                let passphrase = self.passphraseGenerator.passphrase
-                UIPasteboard.general.string = passphrase
-                self.historyStorage.saveItem(passphrase)
-
-                InAppReviewManager.recordPassphraseCopied()
-
-                self.showingCopiedMessage = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.copiedMessageDismissDelay) {
-                    self.showingCopiedMessage = false
-                }
-            }) {
-                Text(copyButtonTitle)
-                    .centered()
+            .centered()
+            Button(copyButtonTitle) {
+                let passphrase = passphraseGenerator.passphrase
+                guard copyAction.copy(passphrase) else { return }
+                showingCopiedMessage = true
+                copyFeedbackGeneration += 1
             }
-            .disabled(showingCopiedMessage)
+            .centered()
+            .disabled(showingCopiedMessage || passphraseGenerator.passphrase.isEmpty)
+        }
+        .task(id: copyFeedbackGeneration) {
+            guard showingCopiedMessage else { return }
+            try? await Task.sleep(for: .seconds(1))
+            guard !Task.isCancelled else { return }
+            showingCopiedMessage = false
         }
     }
-
 }
 
 struct SecureInfoView_Previews: PreviewProvider {
     static var previews: some View {
         Form {
-            SecureContentInfoView(passphraseGenerator: .default)
-                .environmentObject(HistoryStorage())
-                .environmentObject(UserSettings())
+            SecureContentInfoView(reviewRequester: InAppReviewRequester())
         }
+        .environmentObject(PassphraseGenerator())
+        .environmentObject(UserSettings())
     }
 }

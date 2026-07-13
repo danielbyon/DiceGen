@@ -2,52 +2,39 @@
 //  PassphraseGeneratorView.swift
 //  DiceGen
 //
-//  Created by Daniel Byon on 3/30/20.
-//  Copyright © 2020 Daniel Byon. All rights reserved.
-//
 
 import SwiftUI
-import MobileCoreServices
 
 struct PassphraseGeneratorView: View {
-
-    @EnvironmentObject var historyStorage: HistoryStorage
-    @EnvironmentObject var userSettings: UserSettings
-    @ObservedObject var passphraseGenerator: PassphraseGenerator
+    @EnvironmentObject private var passphraseGenerator: PassphraseGenerator
+    @EnvironmentObject private var userSettings: UserSettings
     @State private var showingSettings = false
 
-    private static let wordRange = 3...50
+    let reviewRequester: InAppReviewRequester
 
     var body: some View {
         Form {
-            SecureContentInfoView(passphraseGenerator: passphraseGenerator)
+            SecureContentInfoView(reviewRequester: reviewRequester)
             Section(header: SectionHeader("Options")) {
-                Stepper(value: $userSettings.numberOfWords, in: Self.wordRange) {
-                    Text("\(Int(userSettings.numberOfWords)) words")
+                Stepper(value: $userSettings.numberOfWords, in: PassphraseConstraints.numberOfWords) {
+                    Text("\(userSettings.numberOfWords) words")
                 }
-                Toggle(isOn: $userSettings.capitalizeWords) {
-                    Text("Capitalize words")
-                }
-                Toggle(isOn: $userSettings.includeRandomNumber) {
-                    Text("Include random number")
-                }
-                Toggle(isOn: $userSettings.includeRandomSpecialCharacter) {
-                    Text("Include special character")
-                }
+                Toggle("Capitalize words", isOn: $userSettings.capitalizeWords)
+                Toggle("Include random number", isOn: $userSettings.includeRandomNumber)
+                Toggle("Include special character", isOn: $userSettings.includeRandomSpecialCharacter)
                 if userSettings.includeRandomSpecialCharacter {
-                    NavigationLink(destination: SelectSpecialCharactersView()) {
-                        Text("Special characters")
+                    NavigationLink("Special characters") {
+                        SelectSpecialCharactersView()
                     }
                 }
                 Picker("Word separator", selection: $userSettings.wordSeparator) {
-                    Text("Space")
-                        .tag(" ")
-                    Text("Dot")
-                        .tag(".")
-                    Text("Dash")
-                        .tag("-")
+                    Text("Space").tag(" ")
+                    Text("Dot").tag(".")
+                    Text("Dash").tag("-")
                 }
-                NavigationLink(destination: SelectWordListView(selectedIdentifier: $userSettings.defaultIdentifier)) {
+                NavigationLink {
+                    SelectWordListView(selectedIdentifier: $userSettings.defaultIdentifier)
+                } label: {
                     HStack {
                         Text("Word List")
                         Spacer()
@@ -56,38 +43,36 @@ struct PassphraseGeneratorView: View {
                     }
                 }
             }
-            if historyStorage.shouldSaveItems {
-                Section {
-                    NavigationLink(destination: PassphraseHistoryView()) {
-                        Text("View Passphrase History")
-                    }
+        }
+        .navigationTitle("DiceGen")
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    showingSettings = true
+                } label: {
+                    Image(systemName: "info.circle")
                 }
+                .accessibilityLabel("Settings")
             }
         }
-        .navigationBarTitle("DiceGen")
-        .navigationBarItems(leading: Button(action: {
-            self.showingSettings.toggle()
-        }, label: {
-            Image(systemName: "info.circle")
-                .padding([.trailing, .vertical])
-        }).sheet(isPresented: $showingSettings) {
-            NavigationView {
+        .sheet(isPresented: $showingSettings) {
+            NavigationStack {
                 SettingsView()
             }
-            .navigationViewStyle(StackNavigationViewStyle())
-            .environmentObject(HistoryStorage())
-            .environmentObject(UserSettings())
-        })
+        }
+        .task(id: userSettings.generationOptions) {
+            passphraseGenerator.generate(options: userSettings.generationOptions)
+        }
     }
-
 }
 
 struct PassphraseGeneratorView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            PassphraseGeneratorView(passphraseGenerator: .default)
-                .environmentObject(HistoryStorage())
-                .environmentObject(UserSettings())
+        NavigationStack {
+            PassphraseGeneratorView(reviewRequester: InAppReviewRequester())
         }
+        .environmentObject(UserSettings())
+        .environmentObject(PassphraseGenerator())
+        .environmentObject(TipStore(client: StoreKitClient(), startTransactionListener: false))
     }
 }

@@ -30,7 +30,7 @@ struct AcknowledgementsView: View {
                 SettingsLinkButton(title: $0.title, url: $0.url)
             }
         }
-        .navigationBarTitle("Acknowledgements")
+        .navigationTitle("Acknowledgements")
     }
 
 }

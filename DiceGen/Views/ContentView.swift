@@ -2,37 +2,37 @@
 //  ContentView.swift
 //  DiceGen
 //
-//  Created by Daniel Byon on 3/29/20.
-//  Copyright © 2020 Daniel Byon. All rights reserved.
-//
 
+import StoreKit
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.requestReview) private var requestReview
+    @State private var recordedLaunch = false
 
-    @EnvironmentObject var userSettings: UserSettings
+    let reviewRequester: InAppReviewRequester
+    let reviewRequestsEnabled: Bool
 
     var body: some View {
-        NavigationView {
-            PassphraseGeneratorView(
-                passphraseGenerator: PassphraseGenerator(
-                    wordListIdentifier: userSettings.defaultIdentifier,
-                    numberOfWords: userSettings.numberOfWords,
-                    capitalizeWords: userSettings.capitalizeWords,
-                    includeRandomNumber: userSettings.includeRandomNumber,
-                    includeRandomSpecialCharacter: userSettings.includeRandomSpecialCharacter,
-                    validSpecialCharacters: userSettings.validSpecialCharacters,
-                    wordSeparator: userSettings.wordSeparator))
+        NavigationStack {
+            PassphraseGeneratorView(reviewRequester: reviewRequester)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .task {
+            guard !recordedLaunch else { return }
+            recordedLaunch = true
+            guard reviewRequestsEnabled else { return }
+            reviewRequester.recordAppLaunch {
+                requestReview()
+            }
+        }
     }
-
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .environmentObject(HistoryStorage())
+        ContentView(reviewRequester: InAppReviewRequester(), reviewRequestsEnabled: false)
             .environmentObject(UserSettings())
+            .environmentObject(PassphraseGenerator())
+            .environmentObject(TipStore(client: StoreKitClient(), startTransactionListener: false))
     }
 }

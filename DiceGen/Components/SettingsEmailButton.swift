@@ -2,15 +2,11 @@
 //  SettingsEmailButton.swift
 //  DiceGen
 //
-//  Created by Daniel Byon on 3/31/20.
-//  Copyright © 2020 Daniel Byon. All rights reserved.
-//
 
-import SwiftUI
 import MessageUI
+import SwiftUI
 
 struct SettingsEmailButton: View {
-
     @State private var isShowingComposeEmail = false
     @State private var isShowingComposeError = false
     @State private var composeResult: Result<MFMailComposeResult, Error>?
@@ -20,25 +16,28 @@ struct SettingsEmailButton: View {
     let subject: String
 
     var body: some View {
-        Button(action: {
-            debugPrint("Opening \(self.title) URL")
+        Button(title) {
             if MFMailComposeViewController.canSendMail() {
-                self.isShowingComposeEmail.toggle()
+                isShowingComposeEmail = true
             } else {
-                self.isShowingComposeError.toggle()
+                isShowingComposeError = true
             }
-        }) {
-            Text(title)
-                .foregroundColor(.primary)
         }
+        .foregroundStyle(.primary)
         .sheet(isPresented: $isShowingComposeEmail) {
-            MailComposeView(toRecipients: [self.emailAddress], subject: self.subject, isShowing: self.$isShowingComposeEmail, result: self.$composeResult)
+            MailComposeView(
+                toRecipients: [emailAddress],
+                subject: subject,
+                isShowing: $isShowingComposeEmail,
+                result: $composeResult
+            )
         }
-        .alert(isPresented: $isShowingComposeError) {
-            Alert(title: Text("Can't send email"), message: Text("Please check your email settings and try again."), dismissButton: nil)
+        .alert("Can't send email", isPresented: $isShowingComposeError) {
+            Button("Dismiss", role: .cancel) {}
+        } message: {
+            Text("Please check your email settings and try again.")
         }
     }
-
 }
 
 struct SettingsEmailButton_Previews: PreviewProvider {

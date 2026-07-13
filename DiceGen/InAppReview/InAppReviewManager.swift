@@ -2,42 +2,42 @@
 //  InAppReviewManager.swift
 //  DiceGen
 //
-//  Created by Daniel Byon on 4/3/20.
-//  Copyright © 2020 Daniel Byon. All rights reserved.
-//
 
 import Foundation
-import StoreKit
 
-struct InAppReviewManager {
-
-    @UserDefault(key: "appLaunchCount", defaultValue: 0)
-    private static var appLaunchCount: Int
-
-    @UserDefault(key: "passphraseCopyCount", defaultValue: 0)
-    private static var passphraseCopyCount: Int
-
-    @UserDefault(key: "lastDateRequested", defaultValue: .distantPast)
-    private static var lastDateRequested: Date
-
-    private init() { }
-
-    static func recordAppLaunch() {
-        appLaunchCount += 1
-        requestAppReviewIfNecessary()
+@MainActor
+final class InAppReviewRequester {
+    private enum Key {
+        static let appLaunchCount = "appLaunchCount"
+        static let passphraseCopyCount = "passphraseCopyCount"
+        static let lastDateRequested = "lastDateRequested"
     }
 
-    static func recordPassphraseCopied() {
-        passphraseCopyCount += 1
-        requestAppReviewIfNecessary()
+    private let defaults: UserDefaults
+    private let currentDate: () -> Date
+
+    init(defaults: UserDefaults = .standard, currentDate: @escaping () -> Date = Date.init) {
+        self.defaults = defaults
+        self.currentDate = currentDate
     }
 
-    private static func requestAppReviewIfNecessary() {
-        guard appLaunchCount > 2,
-            passphraseCopyCount > 2,
-            Date().timeIntervalSince(lastDateRequested) >= (30 * 86_400) else { return }
-        lastDateRequested = Date()
-        SKStoreReviewController.requestReview()
+    func recordAppLaunch(requestReview: () -> Void) {
+        let launchCount = defaults.integer(forKey: Key.appLaunchCount) + 1
+        defaults.set(launchCount, forKey: Key.appLaunchCount)
+
+        let copyCount = defaults.integer(forKey: Key.passphraseCopyCount)
+        let lastDateRequested = defaults.object(forKey: Key.lastDateRequested) as? Date ?? .distantPast
+        let now = currentDate()
+        guard launchCount > 2,
+              copyCount > 2,
+              now.timeIntervalSince(lastDateRequested) >= 30 * 86_400 else { return }
+
+        defaults.set(now, forKey: Key.lastDateRequested)
+        requestReview()
     }
 
+    func recordPassphraseCopied() {
+        let copyCount = defaults.integer(forKey: Key.passphraseCopyCount) + 1
+        defaults.set(copyCount, forKey: Key.passphraseCopyCount)
+    }
 }
