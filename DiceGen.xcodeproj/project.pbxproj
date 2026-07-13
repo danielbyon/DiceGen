@@ -625,7 +625,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"DiceGen/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = DiceGen/Info.plist;
@@ -657,7 +657,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"DiceGen/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				"ENABLE_TESTABILITY[sdk=iphonesimulator*]" = YES;
