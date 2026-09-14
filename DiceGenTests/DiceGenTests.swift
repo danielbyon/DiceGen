@@ -412,6 +412,15 @@ final class DiceGenTests: XCTestCase {
         XCTAssertEqual(store.loadState, .loaded)
         let productRequests = await fake.productRequests
         XCTAssertEqual(productRequests, 1)
+        let requestedProductIdentifiers = await fake.requestedProductIdentifiers
+        XCTAssertEqual(
+            requestedProductIdentifiers,
+            [Set([
+                "com.danielbyon.DiceGen.iap.tipjarsmall",
+                "com.danielbyon.DiceGen.iap.tipjarmedium",
+                "com.danielbyon.DiceGen.iap.tipjarlarge"
+            ])]
+        )
     }
 
     func testTipStoreKeepsPartialProductResultsUsable() async {
@@ -718,6 +727,7 @@ private actor FakeStoreClient: StoreClientProtocol {
     private(set) var listenerStarts = 0
     private(set) var listenerCancellations = 0
     private(set) var productRequests = 0
+    private(set) var requestedProductIdentifiers: [Set<String>] = []
 
     init(
         productsResult: Result<[TipProduct], TestStoreError> = .success([]),
@@ -732,6 +742,7 @@ private actor FakeStoreClient: StoreClientProtocol {
 
     func products(for identifiers: Set<String>) async throws -> [TipProduct] {
         productRequests += 1
+        requestedProductIdentifiers.append(identifiers)
         return try productsResult.get()
     }
 

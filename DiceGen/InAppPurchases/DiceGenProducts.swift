@@ -6,9 +6,9 @@
 import Foundation
 
 enum DiceGenProduct {
-    static let smallTip = "smallTip"
-    static let mediumTip = "mediumTip"
-    static let largeTip = "largeTip"
+    static let smallTip = "com.danielbyon.DiceGen.iap.tipjarsmall"
+    static let mediumTip = "com.danielbyon.DiceGen.iap.tipjarmedium"
+    static let largeTip = "com.danielbyon.DiceGen.iap.tipjarlarge"
 
     static let allIdentifiers: Set<String> = [smallTip, mediumTip, largeTip]
 
