@@ -1,0 +1,11 @@
+DiceGen.xcodeproj/project.pbxproj
+  ai_agent 352,549,608,633,667,691,712,732,752
+DiceGen.xcodeproj/xcshareddata/xcschemes/DiceGen.xcscheme
+  ai_agent 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "4b3ed151126a6ab0f22f464b19a1801e4672afe2",
+  "prompts": {}
+}
