@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		653A08432436FB5200BDC2A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65EA11B92436F91200C99C3B /* StoreKit.framework */; };
 		65B46CB024318E7A00620D88 /* DiceGenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B46CAF24318E7A00620D88 /* DiceGenTests.swift */; };
+		A10000000000000000000011 /* HistoryStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000010 /* HistoryStoreTests.swift */; };
+		A10000000000000000000018 /* PINCredentialStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000017 /* PINCredentialStoreTests.swift */; };
+		A10000000000000000000024 /* HistoryAuthenticatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000023 /* HistoryAuthenticatorTests.swift */; };
+		A10000000000000000000026 /* HistoryMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000025 /* HistoryMigrationTests.swift */; };
+		A10000000000000000000030 /* HistoryVaultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000029 /* HistoryVaultTests.swift */; };
 		65B46CBB24318E7A00620D88 /* DiceGenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B46CBA24318E7A00620D88 /* DiceGenUITests.swift */; };
 		65F2AFAF28BB4B3200218C89 /* StoreClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF5D28BB4B3200218C89 /* StoreClient.swift */; };
 		65F2AFB028BB4B3200218C89 /* DiceGenProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AF5E28BB4B3200218C89 /* DiceGenProducts.swift */; };
@@ -39,6 +44,18 @@
 		65F2AFF228BB4B3200218C89 /* MailComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F2AFAC28BB4B3200218C89 /* MailComposeView.swift */; };
 		65F2AFF528BB4D7400218C89 /* WordLists in Resources */ = {isa = PBXBuildFile; fileRef = 65F2AFF428BB4D7400218C89 /* WordLists */; };
 		A10000000000000000000002 /* PassphraseClipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* PassphraseClipboard.swift */; };
+		A10000000000000000000013 /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* HistoryEntry.swift */; };
+		A10000000000000000000015 /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* HistoryStore.swift */; };
+		A10000000000000000000020 /* PINCredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000019 /* PINCredentialStore.swift */; };
+		A10000000000000000000022 /* HistoryAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* HistoryAuthenticator.swift */; };
+		A10000000000000000000028 /* HistoryMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000027 /* HistoryMigration.swift */; };
+		A10000000000000000000032 /* HistoryVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000031 /* HistoryVault.swift */; };
+		A10000000000000000000034 /* HistoryUnlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000033 /* HistoryUnlockView.swift */; };
+		A10000000000000000000036 /* PassphraseHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000035 /* PassphraseHistoryView.swift */; };
+		A10000000000000000000040 /* HistorySetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000039 /* HistorySetupView.swift */; };
+		A10000000000000000000042 /* HistorySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000041 /* HistorySettingsView.swift */; };
+		A10000000000000000000044 /* ChangeHistoryPINView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000043 /* ChangeHistoryPINView.swift */; };
+		A10000000000000000000048 /* HistoryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000047 /* HistoryUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +79,11 @@
 		65B46C9524318E7800620D88 /* DiceGen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiceGen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65B46CAB24318E7A00620D88 /* DiceGenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiceGenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65B46CAF24318E7A00620D88 /* DiceGenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceGenTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000010 /* HistoryStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStoreTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000017 /* PINCredentialStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINCredentialStoreTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000023 /* HistoryAuthenticatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryAuthenticatorTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000025 /* HistoryMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMigrationTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000029 /* HistoryVaultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVaultTests.swift; sourceTree = "<group>"; };
 		65B46CB124318E7A00620D88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65B46CB624318E7A00620D88 /* DiceGenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiceGenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65B46CBA24318E7A00620D88 /* DiceGenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceGenUITests.swift; sourceTree = "<group>"; };
@@ -98,6 +120,18 @@
 		65F2AFAD28BB4B3200218C89 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65F2AFF428BB4D7400218C89 /* WordLists */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WordLists; sourceTree = "<group>"; };
 		A10000000000000000000001 /* PassphraseClipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseClipboard.swift; sourceTree = "<group>"; };
+		A10000000000000000000012 /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
+		A10000000000000000000014 /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
+		A10000000000000000000019 /* PINCredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINCredentialStore.swift; sourceTree = "<group>"; };
+		A10000000000000000000021 /* HistoryAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryAuthenticator.swift; sourceTree = "<group>"; };
+		A10000000000000000000027 /* HistoryMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMigration.swift; sourceTree = "<group>"; };
+		A10000000000000000000031 /* HistoryVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVault.swift; sourceTree = "<group>"; };
+		A10000000000000000000033 /* HistoryUnlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryUnlockView.swift; sourceTree = "<group>"; };
+		A10000000000000000000035 /* PassphraseHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseHistoryView.swift; sourceTree = "<group>"; };
+		A10000000000000000000039 /* HistorySetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySetupView.swift; sourceTree = "<group>"; };
+		A10000000000000000000041 /* HistorySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySettingsView.swift; sourceTree = "<group>"; };
+		A10000000000000000000043 /* ChangeHistoryPINView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeHistoryPINView.swift; sourceTree = "<group>"; };
+		A10000000000000000000047 /* HistoryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +185,11 @@
 			isa = PBXGroup;
 			children = (
 				65B46CAF24318E7A00620D88 /* DiceGenTests.swift */,
+				A10000000000000000000010 /* HistoryStoreTests.swift */,
+				A10000000000000000000017 /* PINCredentialStoreTests.swift */,
+				A10000000000000000000023 /* HistoryAuthenticatorTests.swift */,
+				A10000000000000000000025 /* HistoryMigrationTests.swift */,
+				A10000000000000000000029 /* HistoryVaultTests.swift */,
 				65B46CB124318E7A00620D88 /* Info.plist */,
 			);
 			path = DiceGenTests;
@@ -160,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				65B46CBA24318E7A00620D88 /* DiceGenUITests.swift */,
+				A10000000000000000000047 /* HistoryUITests.swift */,
 				65B46CBC24318E7A00620D88 /* Info.plist */,
 			);
 			path = DiceGenUITests;
@@ -181,6 +221,7 @@
 				65F2AF9128BB4B3200218C89 /* DiceGen.entitlements */,
 				65F2AF8928BB4B3200218C89 /* Extensions */,
 				65F2AF9728BB4B3200218C89 /* Generators */,
+				A10000000000000000000016 /* History */,
 				65F2AF5B28BB4B3200218C89 /* InAppPurchases */,
 				65F2AF8728BB4B3200218C89 /* InAppReview */,
 				65F2AFAD28BB4B3200218C89 /* Info.plist */,
@@ -189,6 +230,19 @@
 				65F2AF9F28BB4B3200218C89 /* Views */,
 			);
 			path = DiceGen;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000016 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000012 /* HistoryEntry.swift */,
+				A10000000000000000000014 /* HistoryStore.swift */,
+				A10000000000000000000019 /* PINCredentialStore.swift */,
+				A10000000000000000000021 /* HistoryAuthenticator.swift */,
+				A10000000000000000000027 /* HistoryMigration.swift */,
+				A10000000000000000000031 /* HistoryVault.swift */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 		65F2AF5B28BB4B3200218C89 /* InAppPurchases */ = {
@@ -272,6 +326,7 @@
 			children = (
 				65F2AFA928BB4B3200218C89 /* AcknowledgementsView.swift */,
 				65F2AFAB28BB4B3200218C89 /* ContentView.swift */,
+				A10000000000000000000037 /* History */,
 				65F2AFAC28BB4B3200218C89 /* MailComposeView.swift */,
 				65F2AFA828BB4B3200218C89 /* PassphraseGeneratorView.swift */,
 				65F2AFAA28BB4B3200218C89 /* SecureContentInfoView.swift */,
@@ -281,6 +336,18 @@
 				65F2AFA328BB4B3200218C89 /* TipJarView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000037 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000033 /* HistoryUnlockView.swift */,
+				A10000000000000000000035 /* PassphraseHistoryView.swift */,
+				A10000000000000000000039 /* HistorySetupView.swift */,
+				A10000000000000000000041 /* HistorySettingsView.swift */,
+				A10000000000000000000043 /* ChangeHistoryPINView.swift */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -443,6 +510,17 @@
 				65F2AFEE28BB4B3200218C89 /* PassphraseGeneratorView.swift in Sources */,
 				65F2AFD728BB4B3200218C89 /* Constants.swift in Sources */,
 				A10000000000000000000002 /* PassphraseClipboard.swift in Sources */,
+				A10000000000000000000013 /* HistoryEntry.swift in Sources */,
+				A10000000000000000000015 /* HistoryStore.swift in Sources */,
+				A10000000000000000000020 /* PINCredentialStore.swift in Sources */,
+				A10000000000000000000022 /* HistoryAuthenticator.swift in Sources */,
+				A10000000000000000000028 /* HistoryMigration.swift in Sources */,
+				A10000000000000000000032 /* HistoryVault.swift in Sources */,
+				A10000000000000000000034 /* HistoryUnlockView.swift in Sources */,
+				A10000000000000000000036 /* PassphraseHistoryView.swift in Sources */,
+				A10000000000000000000040 /* HistorySetupView.swift in Sources */,
+				A10000000000000000000042 /* HistorySettingsView.swift in Sources */,
+				A10000000000000000000044 /* ChangeHistoryPINView.swift in Sources */,
 				65F2AFEB28BB4B3200218C89 /* SelectWordListView.swift in Sources */,
 				65F2AFE028BB4B3200218C89 /* WordList.swift in Sources */,
 				65F2AFE128BB4B3200218C89 /* SpecialCharacter.swift in Sources */,
@@ -454,6 +532,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				65B46CB024318E7A00620D88 /* DiceGenTests.swift in Sources */,
+				A10000000000000000000011 /* HistoryStoreTests.swift in Sources */,
+				A10000000000000000000018 /* PINCredentialStoreTests.swift in Sources */,
+				A10000000000000000000024 /* HistoryAuthenticatorTests.swift in Sources */,
+				A10000000000000000000026 /* HistoryMigrationTests.swift in Sources */,
+				A10000000000000000000030 /* HistoryVaultTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +545,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65B46CBB24318E7A00620D88 /* DiceGenUITests.swift in Sources */,
+				A10000000000000000000048 /* HistoryUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

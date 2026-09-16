@@ -17,9 +17,6 @@ final class UserSettings: ObservableObject {
         static let validSpecialCharacters = "validSpecialCharacters"
         static let wordSeparator = "wordSeparator"
 
-        // These keys are intentionally retained only to delete plaintext history from earlier releases.
-        static let legacySavedItems = "savedItems"
-        static let legacyShouldSaveItems = "shouldSaveItems"
     }
 
     static let defaultNumberOfWords = 5
@@ -38,9 +35,6 @@ final class UserSettings: ObservableObject {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-
-        defaults.removeObject(forKey: Key.legacySavedItems)
-        defaults.removeObject(forKey: Key.legacyShouldSaveItems)
 
         let storedIdentifier = defaults.object(forKey: Key.wordListIdentifier) as? String
         defaultIdentifierStorage = storedIdentifier.flatMap(WordListIdentifier.init(rawValue:)) ?? .english

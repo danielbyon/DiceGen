@@ -258,13 +258,13 @@ final class DiceGenTests: XCTestCase {
         }
     }
 
-    func testLegacyHistoryKeysAreDeletedDuringSettingsInitialization() {
+    func testUserSettingsLeavesLegacyHistoryForHistoryMigration() {
         withIsolatedDefaults { defaults in
-            defaults.set([["content": "secret"]], forKey: "savedItems")
+            defaults.set([["content": "old-value", "savedAt": Date(timeIntervalSince1970: 100)]], forKey: "savedItems")
             defaults.set(true, forKey: "shouldSaveItems")
             _ = UserSettings(defaults: defaults)
-            XCTAssertNil(defaults.object(forKey: "savedItems"))
-            XCTAssertNil(defaults.object(forKey: "shouldSaveItems"))
+            XCTAssertNotNil(defaults.object(forKey: "savedItems"))
+            XCTAssertNotNil(defaults.object(forKey: "shouldSaveItems"))
         }
     }
 

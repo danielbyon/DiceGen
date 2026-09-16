@@ -8,6 +8,7 @@ import SwiftUI
 struct SecureContentInfoView: View {
     @EnvironmentObject private var passphraseGenerator: PassphraseGenerator
     @EnvironmentObject private var userSettings: UserSettings
+    @EnvironmentObject private var historyVault: HistoryVault
     @State private var showingCopiedMessage = false
     @State private var copyFeedbackGeneration = 0
 
@@ -46,6 +47,9 @@ struct SecureContentInfoView: View {
                 guard copyAction.copy(passphrase) else { return }
                 showingCopiedMessage = true
                 copyFeedbackGeneration += 1
+                Task {
+                    await historyVault.recordCopiedPassphrase(passphrase)
+                }
             }
             .centered()
             .disabled(showingCopiedMessage || passphraseGenerator.passphrase.isEmpty)
@@ -66,5 +70,6 @@ struct SecureInfoView_Previews: PreviewProvider {
         }
         .environmentObject(PassphraseGenerator())
         .environmentObject(UserSettings())
+        .environmentObject(HistoryVault.preview())
     }
 }
