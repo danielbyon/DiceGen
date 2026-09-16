@@ -8,6 +8,7 @@ import SwiftUI
 struct PassphraseGeneratorView: View {
     @EnvironmentObject private var passphraseGenerator: PassphraseGenerator
     @EnvironmentObject private var userSettings: UserSettings
+    @EnvironmentObject private var historyVault: HistoryVault
     @State private var showingSettings = false
 
     let reviewRequester: InAppReviewRequester
@@ -43,6 +44,13 @@ struct PassphraseGeneratorView: View {
                     }
                 }
             }
+            if historyVault.isConfigured {
+                Section {
+                    NavigationLink("View Passphrase History") {
+                        PassphraseHistoryView(reviewRequester: reviewRequester)
+                    }
+                }
+            }
         }
         .navigationTitle("DiceGen")
         .toolbar {
@@ -74,5 +82,6 @@ struct PassphraseGeneratorView_Previews: PreviewProvider {
         .environmentObject(UserSettings())
         .environmentObject(PassphraseGenerator())
         .environmentObject(TipStore(client: StoreKitClient(), startTransactionListener: false))
+        .environmentObject(HistoryVault.preview())
     }
 }

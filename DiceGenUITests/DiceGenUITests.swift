@@ -30,6 +30,7 @@ final class DiceGenUITests: XCTestCase {
 
         app.buttons["Settings"].tap()
         XCTAssertTrue(app.navigationBars["Settings"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["History"].exists)
         XCTAssertFalse(app.switches["Save copied passphrases/passwords"].exists)
         XCTAssertFalse(app.buttons["Clear passphrase/password history"].exists)
 

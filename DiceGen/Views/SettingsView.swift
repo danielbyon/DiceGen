@@ -7,6 +7,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var historyVault: HistoryVault
 
     private let urls: [(title: String, url: URL)] = [
         ("Write a review", URL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=980521593&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software ")!),
@@ -26,6 +27,18 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
+            Section {
+                NavigationLink {
+                    HistorySettingsView()
+                } label: {
+                    HStack {
+                        Text("History")
+                        Spacer()
+                        Text(historyStatus)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
             Section {
                 ForEach(emails, id: \.title) {
                     SettingsEmailButton(title: $0.title, emailAddress: $0.emailAddress, subject: $0.subject)
@@ -55,6 +68,21 @@ struct SettingsView: View {
             }
         }
     }
+
+    private var historyStatus: String {
+        switch historyVault.state {
+        case .disabled:
+            return "Off"
+        case .setupRequired:
+            return "Setup Required"
+        case .locked, .unlocked:
+            return "On"
+        case .initializing:
+            return "Setup Required"
+        case .failed:
+            return "Needs Reset"
+        }
+    }
 }
 
 struct SettingsView_Previews: PreviewProvider {
@@ -63,6 +91,7 @@ struct SettingsView_Previews: PreviewProvider {
             SettingsView()
         }
         .environmentObject(TipStore(client: StoreKitClient(), startTransactionListener: false))
+        .environmentObject(HistoryVault.preview())
     }
 }
 
