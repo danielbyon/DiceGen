@@ -3,6 +3,7 @@
 //  DiceGen
 //
 
+import Foundation
 import SwiftUI
 
 @main
@@ -85,6 +86,9 @@ private struct AppRuntimeConfiguration {
         let historyRootURL = FileManager.default.temporaryDirectory
             .appendingPathComponent("DiceGen-ui-tests-history", isDirectory: true)
         try? FileManager.default.removeItem(at: historyRootURL)
+        let suspendsSystemAuthentication = processInfo.arguments.contains(
+            "--ui-testing-local-auth-suspended"
+        )
         if processInfo.arguments.contains("--ui-testing-seeded-legacy-history") {
             defaults.set(
                 [["content": "seeded legacy history", "savedAt": Date(timeIntervalSince1970: 100)]],
@@ -100,7 +104,10 @@ private struct AppRuntimeConfiguration {
             historyRootURL: historyRootURL,
             historyCredentialStore: UITestPINCredentialStore(),
             historyAuthenticator: UITestHistoryAuthenticator(
-                result: processInfo.arguments.contains("--ui-testing-local-auth-success") ? .success : .cancelled
+                result: processInfo.arguments.contains("--ui-testing-local-auth-success") || suspendsSystemAuthentication
+                    ? .success
+                    : .cancelled,
+                waitsForRelease: suspendsSystemAuthentication
             )
         )
     }
@@ -146,10 +153,60 @@ private actor UITestPINCredentialStore: PINCredentialStoring {
     }
 }
 
+private final class UITestAuthenticationContinuationBox: @unchecked Sendable {
+    private let lock = NSLock()
+    private var continuation: CheckedContinuation<HistoryAuthenticationResult, Never>?
+    private var hasResumed = false
+
+    func install(
+        _ continuation: CheckedContinuation<HistoryAuthenticationResult, Never>,
+        result: HistoryAuthenticationResult
+    ) {
+        lock.lock()
+        let resumeImmediately = hasResumed
+        if !resumeImmediately {
+            self.continuation = continuation
+        }
+        lock.unlock()
+
+        if resumeImmediately {
+            continuation.resume(returning: result)
+        }
+    }
+
+    func resume(with result: HistoryAuthenticationResult) {
+        lock.lock()
+        guard !hasResumed else {
+            lock.unlock()
+            return
+        }
+        hasResumed = true
+        let continuation = self.continuation
+        self.continuation = nil
+        lock.unlock()
+
+        continuation?.resume(returning: result)
+    }
+}
+
 private struct UITestHistoryAuthenticator: HistoryAuthenticating {
     let result: HistoryAuthenticationResult
+    let waitsForRelease: Bool
 
     func authenticate(reason: String) async -> HistoryAuthenticationResult {
-        result
+        guard waitsForRelease else { return result }
+
+        let continuationBox = UITestAuthenticationContinuationBox()
+        return await withTaskCancellationHandler(operation: {
+            await withCheckedContinuation { continuation in
+                continuationBox.install(continuation, result: result)
+                if Task.isCancelled {
+                    continuationBox.resume(with: result)
+                }
+            }
+        }, onCancel: {
+            // Scene-task cancellation releases the suspended request for the UI test.
+            continuationBox.resume(with: result)
+        })
     }
 }

@@ -507,15 +507,323 @@ final class HistoryVaultTests: XCTestCase {
         await vault.initialize()
         let task = Task { await vault.authenticateWithSystem() }
         await authenticator.waitForAuthentication()
-        vault.setSceneActive(false)
+        vault.setScenePhase(.inactive)
+        XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
+        vault.setScenePhase(.background)
+        XCTAssertTrue(vault.systemAuthenticationRequiresPIN)
+        vault.setScenePhase(.active)
+        let gatedResult = await vault.authenticateWithSystem()
+        let invocationCount = await authenticator.invocationCount()
+        XCTAssertEqual(gatedResult, .failed)
+        XCTAssertEqual(invocationCount, 1)
+        await authenticator.complete(.success)
+        let result = await task.value
+
+        XCTAssertEqual(result, .stale)
+        XCTAssertEqual(vault.state, .locked)
+        XCTAssertTrue(vault.entries.isEmpty)
+        XCTAssertTrue(vault.systemAuthenticationRequiresPIN)
+    }
+
+    func testSystemAuthenticationSucceedsAfterTransientInactivityThenActive() async {
+        var metadata = configuredMetadata()
+        metadata.localAuthenticationEnabled = true
+        let entry = historyEntry("system secret")
+        let authenticator = SuspendingAuthenticator()
+        let vault = HistoryVault(
+            store: VaultStoreSpy(entries: [entry], metadata: metadata),
+            credentials: VaultCredentialSpy(pin: validPIN),
+            authenticator: authenticator,
+            migration: NoOpHistoryMigration()
+        )
+
+        vault.setSceneActive(true)
+        await vault.initialize()
+        let task = Task { await vault.authenticateWithSystem() }
+        await authenticator.waitForAuthentication()
+
+        vault.setScenePhase(.inactive)
+        XCTAssertEqual(vault.state, .locked)
+        XCTAssertTrue(vault.entries.isEmpty)
+        XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
+
+        vault.setScenePhase(.active)
         await authenticator.complete(.success)
         let result = await task.value
 
         XCTAssertEqual(result, .success)
+        XCTAssertEqual(vault.state, .unlocked)
+        XCTAssertEqual(vault.entries, [entry])
+        XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
+    }
+
+    func testSystemAuthenticationSuccessWhileTransientlyInactiveWaitsUntilActive() async {
+        var metadata = configuredMetadata()
+        metadata.localAuthenticationEnabled = true
+        let entry = historyEntry("system secret")
+        let authenticator = SuspendingAuthenticator()
+        let vault = HistoryVault(
+            store: VaultStoreSpy(entries: [entry], metadata: metadata),
+            credentials: VaultCredentialSpy(pin: validPIN),
+            authenticator: authenticator,
+            migration: NoOpHistoryMigration()
+        )
+
+        vault.setSceneActive(true)
+        await vault.initialize()
+        let task = Task { await vault.authenticateWithSystem() }
+        await authenticator.waitForAuthentication()
+
+        vault.setScenePhase(.inactive)
+        await authenticator.complete(.success)
+        await Task.yield()
+
         XCTAssertEqual(vault.state, .locked)
         XCTAssertTrue(vault.entries.isEmpty)
+        XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
+
+        vault.setScenePhase(.active)
+        let result = await task.value
+
+        XCTAssertEqual(result, .success)
+        XCTAssertEqual(vault.state, .unlocked)
+        XCTAssertEqual(vault.entries, [entry])
+        XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
+    }
+
+    func testOverlappingSystemAuthenticationInvocationsAreRejected() async {
+        var metadata = configuredMetadata()
+        metadata.localAuthenticationEnabled = true
+        let authenticator = SuspendingAuthenticator()
+        let vault = HistoryVault(
+            store: VaultStoreSpy(metadata: metadata),
+            credentials: VaultCredentialSpy(pin: validPIN),
+            authenticator: authenticator,
+            migration: NoOpHistoryMigration()
+        )
+
         vault.setSceneActive(true)
+        await vault.initialize()
+        let firstTask = Task { await vault.authenticateWithSystem() }
+        await authenticator.waitForAuthentication()
+
+        let secondResult = await vault.authenticateWithSystem()
+        let invocationCount = await authenticator.invocationCount()
+
+        XCTAssertEqual(secondResult, .failed)
+        XCTAssertEqual(invocationCount, 1)
+        await authenticator.complete(.success)
+        let firstResult = await firstTask.value
+        XCTAssertEqual(firstResult, .success)
+    }
+
+    func testSystemAuthenticationCompletionAfterInvalidationAlwaysReturnsStale() async {
+        for underlyingResult in [
+            HistoryAuthenticationResult.success,
+            .cancelled,
+            .unavailable,
+            .failed
+        ] {
+            var metadata = configuredMetadata()
+            metadata.localAuthenticationEnabled = true
+            let store = VaultStoreSpy(entries: [historyEntry("system secret")], metadata: metadata)
+            let authenticator = SuspendingAuthenticator()
+            let vault = HistoryVault(
+                store: store,
+                credentials: VaultCredentialSpy(pin: validPIN),
+                authenticator: authenticator,
+                migration: NoOpHistoryMigration()
+            )
+
+            vault.setSceneActive(true)
+            await vault.initialize()
+            let task = Task { await vault.authenticateWithSystem() }
+            await authenticator.waitForAuthentication()
+
+            vault.setSceneActive(false)
+            await authenticator.complete(underlyingResult)
+            let result = await task.value
+
+            XCTAssertEqual(result, .stale)
+            XCTAssertEqual(vault.state, .locked)
+            XCTAssertTrue(vault.entries.isEmpty)
+            XCTAssertTrue(vault.systemAuthenticationRequiresPIN)
+        }
+    }
+
+    func testSystemAuthenticationCompletionAfterResetReturnsStale() async {
+        for underlyingResult in [
+            HistoryAuthenticationResult.success,
+            .cancelled,
+            .unavailable,
+            .failed
+        ] {
+            var metadata = configuredMetadata()
+            metadata.localAuthenticationEnabled = true
+            let store = VaultStoreSpy(entries: [historyEntry("system secret")], metadata: metadata)
+            let authenticator = SuspendingAuthenticator()
+            let vault = HistoryVault(
+                store: store,
+                credentials: VaultCredentialSpy(pin: validPIN),
+                authenticator: authenticator,
+                migration: NoOpHistoryMigration()
+            )
+
+            vault.setSceneActive(true)
+            await vault.initialize()
+            let task = Task { await vault.authenticateWithSystem() }
+            await authenticator.waitForAuthentication()
+
+            await vault.resetHistory()
+            await authenticator.complete(underlyingResult)
+            let result = await task.value
+
+            XCTAssertEqual(result, .stale)
+            XCTAssertEqual(vault.state, .disabled)
+            XCTAssertTrue(vault.entries.isEmpty)
+            XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
+        }
+    }
+
+    func testStaleSystemAuthenticationPreservesNewlyConfiguredVault() async {
+        var metadata = configuredMetadata()
+        metadata.localAuthenticationEnabled = true
+        let store = VaultStoreSpy(entries: [historyEntry("old secret")], metadata: metadata)
+        let credentials = ControllableCredentialSpy(pin: validPIN)
+        let authenticator = SuspendingAuthenticator()
+        let vault = HistoryVault(
+            store: store,
+            credentials: credentials,
+            authenticator: authenticator,
+            migration: NoOpHistoryMigration()
+        )
+        let newPIN = String(repeating: "6", count: 4)
+
+        vault.setSceneActive(true)
+        await vault.initialize()
+        let task = Task { await vault.authenticateWithSystem() }
+        await authenticator.waitForAuthentication()
+
+        await vault.resetHistory()
+        let didConfigure = await vault.configureHistory(pin: newPIN)
+        XCTAssertTrue(didConfigure)
+        await vault.recordCopiedPassphrase("new secret")
+        let configuredEntries = vault.entries
+
+        await authenticator.complete(.success)
+        let result = await task.value
+        let credentialSnapshot = await credentials.snapshot()
+
+        XCTAssertEqual(result, .stale)
+        XCTAssertEqual(vault.state, .unlocked)
+        XCTAssertEqual(vault.entries, configuredEntries)
+        XCTAssertTrue(vault.isConfigured)
+        XCTAssertFalse(vault.localAuthenticationEnabled)
+        XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
+        XCTAssertEqual(credentialSnapshot.pin, newPIN)
+        let persistedMetadata = await store.metadataSnapshot()
+        XCTAssertTrue(persistedMetadata.isConfigured)
+    }
+
+    func testStaleSystemAuthenticationCannotRevokeNewerPINAuthorization() async {
+        var metadata = configuredMetadata()
+        metadata.localAuthenticationEnabled = true
+        let store = VaultStoreSpy(entries: [historyEntry("existing secret")], metadata: metadata)
+        let authenticator = SuspendingAuthenticator()
+        let vault = HistoryVault(
+            store: store,
+            credentials: VaultCredentialSpy(pin: validPIN),
+            authenticator: authenticator,
+            migration: NoOpHistoryMigration()
+        )
+
+        vault.setSceneActive(true)
+        await vault.initialize()
+        let task = Task { await vault.authenticateWithSystem() }
+        await authenticator.waitForAuthentication()
+
+        let pinResult = await vault.authenticateWithPIN(validPIN)
+        let authorizedEntries = vault.entries
+
+        await authenticator.complete(.success)
+        let result = await task.value
+
+        XCTAssertEqual(pinResult, .success)
+        XCTAssertEqual(result, .stale)
+        XCTAssertEqual(vault.state, .unlocked)
+        XCTAssertEqual(vault.entries, authorizedEntries)
+        XCTAssertTrue(vault.isConfigured)
+        XCTAssertTrue(vault.localAuthenticationEnabled)
+        XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
+    }
+
+    func testPINFallbackGateClearsOnlyAfterActualPINUnlock() async {
+        var metadata = configuredMetadata()
+        metadata.localAuthenticationEnabled = true
+        let store = VaultStoreSpy(entries: [historyEntry("system secret")], metadata: metadata)
+        let authenticator = SuspendingAuthenticator()
+        let credentials = ControllableCredentialSpy(pin: validPIN)
+        let vault = HistoryVault(
+            store: store,
+            credentials: credentials,
+            authenticator: authenticator,
+            migration: NoOpHistoryMigration()
+        )
+
+        vault.setSceneActive(true)
+        await vault.initialize()
+        let systemTask = Task { await vault.authenticateWithSystem() }
+        await authenticator.waitForAuthentication()
+        vault.setSceneActive(false)
+        await authenticator.complete(.success)
+        let systemResult = await systemTask.value
+        XCTAssertEqual(systemResult, .stale)
+        XCTAssertTrue(vault.systemAuthenticationRequiresPIN)
+
+        vault.setSceneActive(true)
+        await credentials.suspendNextVerification()
+        let stalePINTask = Task { await vault.authenticateWithPIN(validPIN) }
+        await credentials.waitForVerification()
+        vault.setSceneActive(false)
+        await credentials.completeVerification(true)
+
+        let stalePINResult = await stalePINTask.value
+        XCTAssertEqual(stalePINResult, .success)
         XCTAssertEqual(vault.state, .locked)
+        XCTAssertTrue(vault.systemAuthenticationRequiresPIN)
+
+        vault.setSceneActive(true)
+        let unlockResult = await vault.authenticateWithPIN(validPIN)
+
+        XCTAssertEqual(unlockResult, .success)
+        XCTAssertEqual(vault.state, .unlocked)
+        XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
+    }
+
+    func testInitializeClearsPINFallbackGate() async {
+        var metadata = configuredMetadata()
+        metadata.localAuthenticationEnabled = true
+        let authenticator = SuspendingAuthenticator()
+        let vault = HistoryVault(
+            store: VaultStoreSpy(metadata: metadata),
+            credentials: VaultCredentialSpy(pin: validPIN),
+            authenticator: authenticator,
+            migration: NoOpHistoryMigration()
+        )
+
+        vault.setSceneActive(true)
+        await vault.initialize()
+        let task = Task { await vault.authenticateWithSystem() }
+        await authenticator.waitForAuthentication()
+        vault.setSceneActive(false)
+        await authenticator.complete(.success)
+        let result = await task.value
+        XCTAssertEqual(result, .stale)
+        XCTAssertTrue(vault.systemAuthenticationRequiresPIN)
+
+        await vault.initialize()
+
+        XCTAssertFalse(vault.systemAuthenticationRequiresPIN)
     }
 
     func testChangePINRequiresCurrentPINEvenAfterSystemUnlock() async {
@@ -1092,8 +1400,11 @@ private actor SuspendingAuthenticator: HistoryAuthenticating {
     private var continuation: CheckedContinuation<HistoryAuthenticationResult, Never>?
     private var waiter: CheckedContinuation<Void, Never>?
     private var started = false
+    private var authenticationInvocationCount = 0
 
     func authenticate(reason: String) async -> HistoryAuthenticationResult {
+        authenticationInvocationCount += 1
+        guard authenticationInvocationCount == 1 else { return .success }
         started = true
         waiter?.resume()
         waiter = nil
@@ -1112,6 +1423,10 @@ private actor SuspendingAuthenticator: HistoryAuthenticating {
     func complete(_ result: HistoryAuthenticationResult) {
         continuation?.resume(returning: result)
         continuation = nil
+    }
+
+    func invocationCount() -> Int {
+        authenticationInvocationCount
     }
 }
 

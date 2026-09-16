@@ -32,18 +32,18 @@ struct PassphraseHistoryView: View {
                         Button("Clear All", role: .destructive) {
                             showingClearConfirmation = true
                         }
+                        .confirmationDialog(
+                            "Clear all saved passphrases?",
+                            isPresented: $showingClearConfirmation,
+                            titleVisibility: .visible
+                        ) {
+                            Button("Clear History", role: .destructive) {
+                                Task { await historyVault.clearAll() }
+                            }
+                            Button("Cancel", role: .cancel) {}
+                        }
                     }
                 }
-            }
-            .confirmationDialog(
-                "Clear all saved passphrases?",
-                isPresented: $showingClearConfirmation,
-                titleVisibility: .visible
-            ) {
-                Button("Clear History", role: .destructive) {
-                    Task { await historyVault.clearAll() }
-                }
-                Button("Cancel", role: .cancel) {}
             }
     }
 

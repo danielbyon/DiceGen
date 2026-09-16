@@ -47,6 +47,21 @@ final class HistoryUITests: XCTestCase {
         XCTAssertGreaterThan(sectionGap, 25, "Enable History should be separated from the PIN fields")
     }
 
+    func testChangePINPreventsSettingsSheetSwipeDismissal() {
+        continueAfterFailure = false
+        let app = launch()
+
+        enableHistory(in: app)
+        app.buttons["Change PIN"].tap()
+        XCTAssertTrue(app.navigationBars["Change PIN"].waitForExistence(timeout: 3))
+
+        app.navigationBars["Change PIN"].swipeDown()
+        XCTAssertTrue(app.navigationBars["Change PIN"].waitForExistence(timeout: 2))
+
+        app.navigationBars["Change PIN"].buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(app.navigationBars["History"].waitForExistence(timeout: 2))
+    }
+
     func testMigratedHistoryNoticeAppearsFromMainAppFlow() {
         continueAfterFailure = false
         let app = launch(arguments: ["--ui-testing-seeded-legacy-history"])
@@ -122,9 +137,13 @@ final class HistoryUITests: XCTestCase {
         app.buttons["Unlock"].tap()
         XCTAssertTrue(app.navigationBars["Passphrase History"].waitForExistence(timeout: 3))
 
-        app.buttons["Clear All"].tap()
-        XCTAssertTrue(app.buttons["Clear History"].waitForExistence(timeout: 2))
-        app.buttons["Clear History"].tap()
+        let clearAllButton = app.buttons["Clear All"]
+        XCTAssertTrue(clearAllButton.waitForExistence(timeout: 2))
+        clearAllButton.tap()
+
+        let clearHistoryButton = app.buttons["Clear History"]
+        XCTAssertTrue(clearHistoryButton.waitForExistence(timeout: 2))
+        clearHistoryButton.tap()
         XCTAssertTrue(app.staticTexts["No History Yet"].waitForExistence(timeout: 3))
     }
 
@@ -168,6 +187,33 @@ final class HistoryUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Passphrase History"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["Clear All"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.secureTextFields["History PIN"].exists)
+    }
+
+    func testSystemAuthenticationInvalidatedByBackgroundDoesNotReprompt() {
+        continueAfterFailure = false
+        let app = launch(arguments: ["--ui-testing-local-auth-suspended"])
+
+        enableHistory(in: app)
+        let authToggle = app.switches["Use Face ID / Touch ID / Device Passcode"]
+        XCTAssertTrue(authToggle.waitForExistence(timeout: 3))
+        let toggleControl = authToggle.descendants(matching: .switch).firstMatch
+        if toggleControl.exists {
+            toggleControl.tap()
+        } else {
+            authToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        }
+        returnToGenerator(in: app)
+
+        app.buttons["Copy to Clipboard"].tap()
+        openHistory(in: app)
+
+        backgroundApp(app)
+        XCTAssertTrue(app.staticTexts["Unlocking History…"].waitForExistence(timeout: 3))
+
+        backgroundApp(app)
+        XCTAssertTrue(app.secureTextFields["History PIN"].waitForExistence(timeout: 3))
+
+        XCTAssertFalse(app.buttons["Clear All"].waitForExistence(timeout: 2))
     }
 
     private let testPIN = String(repeating: "7", count: 4)
@@ -228,5 +274,11 @@ final class HistoryUITests: XCTestCase {
         XCTAssertTrue(historyLink.waitForExistence(timeout: 3))
         historyLink.tap()
         XCTAssertTrue(app.navigationBars["Passphrase History"].waitForExistence(timeout: 3))
+    }
+
+    private func backgroundApp(_ app: XCUIApplication) {
+        XCUIDevice.shared.press(.home)
+        XCTAssertTrue(app.wait(for: .runningBackground, timeout: 3))
+        app.activate()
     }
 }

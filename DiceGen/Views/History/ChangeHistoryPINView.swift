@@ -50,6 +50,7 @@ struct ChangeHistoryPINView: View {
             }
         }
         .navigationTitle("Change PIN")
+        .interactiveDismissDisabled(true)
         .overlay {
             if isSaving {
                 ProgressView()

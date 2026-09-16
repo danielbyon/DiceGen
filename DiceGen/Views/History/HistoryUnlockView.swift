@@ -73,10 +73,15 @@ struct HistoryUnlockView: View {
         } message: {
             Text("Forgotten PINs cannot be recovered. Deleting history is permanent.")
         }
-        .task(id: historyVault.sceneIsActive) {
+        .task {
             guard historyVault.sceneIsActive else { return }
-            attemptedSystemAuthentication = false
             await attemptSystemAuthenticationIfNeeded()
+        }
+        .onChange(of: historyVault.sceneIsActive) { _, isActive in
+            guard isActive else { return }
+            Task {
+                await attemptSystemAuthenticationIfNeeded()
+            }
         }
         .overlay {
             if let lockoutUntil = historyVault.lockoutUntil, lockoutUntil > Date() {
@@ -97,17 +102,26 @@ struct HistoryUnlockView: View {
     }
 
     private func attemptSystemAuthenticationIfNeeded() async {
-        guard historyVault.sceneIsActive, !attemptedSystemAuthentication else { return }
+        guard historyVault.sceneIsActive else { return }
+
+        if historyVault.systemAuthenticationRequiresPIN {
+            usingPIN = true
+            return
+        }
+
+        guard !attemptedSystemAuthentication, !usingPIN else { return }
         attemptedSystemAuthentication = true
         guard historyVault.localAuthenticationEnabled else { return }
 
         isAuthenticating = true
         let result = await historyVault.authenticateWithSystem()
         isAuthenticating = false
-        guard result != .success else { return }
-        usingPIN = true
-        if result == .failed {
-            message = "Unable to use system authentication. Enter your History PIN."
+        guard result == .success, historyVault.state == .unlocked else {
+            usingPIN = true
+            if result == .failed {
+                message = "Unable to use system authentication. Enter your History PIN."
+            }
+            return
         }
     }
 

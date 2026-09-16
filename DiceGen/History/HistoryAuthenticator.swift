@@ -11,6 +11,7 @@ enum HistoryAuthenticationResult: Equatable, Sendable {
     case cancelled
     case unavailable
     case failed
+    case stale
 }
 
 /// Abstracts LocalAuthentication so history flows can be tested without system UI.

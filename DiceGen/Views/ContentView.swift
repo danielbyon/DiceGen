@@ -28,6 +28,7 @@ struct ContentView: View {
                     .ignoresSafeArea()
                     .accessibilityHidden(true)
             }
+
         }
         .alert("History now requires a PIN", isPresented: $showingMigrationNotice) {
             Button("OK") {
@@ -37,7 +38,7 @@ struct ContentView: View {
             Text("Existing history was moved to private local storage. Set a PIN in Settings > History to access it and resume saving copied passphrases.")
         }
         .task {
-            historyVault.setSceneActive(scenePhase == .active)
+            historyVault.setScenePhase(historyScenePhase(for: scenePhase))
             await historyVault.initialize()
             historyDidInitialize = true
             presentMigrationNoticeIfNeeded()
@@ -49,12 +50,25 @@ struct ContentView: View {
             }
         }
         .onChange(of: scenePhase) { _, newPhase in
-            historyVault.setSceneActive(newPhase == .active)
+            historyVault.setScenePhase(historyScenePhase(for: newPhase))
             if newPhase == .active {
                 presentMigrationNoticeIfNeeded()
             } else {
                 showingMigrationNotice = false
             }
+        }
+    }
+
+    private func historyScenePhase(for phase: ScenePhase) -> HistoryScenePhase {
+        switch phase {
+        case .active:
+            return .active
+        case .inactive:
+            return .inactive
+        case .background:
+            return .background
+        @unknown default:
+            return .background
         }
     }
 

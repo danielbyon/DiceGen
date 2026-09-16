@@ -31,12 +31,21 @@ enum HistoryPINResult: Equatable, Sendable {
     case failed
 }
 
+/// The scene phases that affect protected history authorization and privacy.
+enum HistoryScenePhase: Equatable, Sendable {
+    case active
+    case inactive
+    case background
+}
+
 /// Coordinates protected history persistence, authentication, lockout, and privacy state.
 @MainActor
 final class HistoryVault: ObservableObject {
     @Published private(set) var state: HistoryVaultState = .initializing
     @Published private(set) var entries: [HistoryEntry] = []
     @Published private(set) var lockoutUntil: Date?
+    /// Indicates that a lifecycle interruption invalidated system authentication and requires explicit PIN entry.
+    @Published private(set) var systemAuthenticationRequiresPIN = false
 
     private let store: any HistoryPersisting
     private let credentials: any PINCredentialStoring
@@ -48,6 +57,9 @@ final class HistoryVault: ObservableObject {
     @Published private(set) var sceneIsActive = false
     private var sessionGeneration: UInt = 0
     private var resetGeneration: UInt = 0
+    private var systemAuthenticationInFlight = false
+    private var systemAuthenticationGeneration: UInt = 0
+    private var systemAuthenticationActivationWaiter: CheckedContinuation<Void, Never>?
 
     init(
         store: any HistoryPersisting,
@@ -89,8 +101,11 @@ final class HistoryVault: ObservableObject {
     /// Loads non-secret state without ever publishing stored plaintext before authorization.
     func initialize() async {
         sessionGeneration &+= 1
+        systemAuthenticationGeneration &+= 1
+        resumeSystemAuthenticationActivationWaiter()
         entries.removeAll()
         lockoutUntil = nil
+        systemAuthenticationRequiresPIN = false
         state = .initializing
 
         do {
@@ -145,16 +160,33 @@ final class HistoryVault: ObservableObject {
         }
     }
 
-    /// Locks immediately whenever the scene is not active; returning active never unlocks.
+    /// Treats the legacy Boolean lifecycle call as a full background transition.
     func setSceneActive(_ active: Bool) {
-        sceneIsActive = active
-        guard !active else { return }
+        setScenePhase(active ? .active : .background)
+    }
+
+    /// Locks immediately outside the active scene and preserves only in-flight
+    /// system authentication across the transient inactive phase.
+    func setScenePhase(_ phase: HistoryScenePhase) {
+        sceneIsActive = phase == .active
+        guard phase != .active else {
+            resumeSystemAuthenticationActivationWaiter()
+            return
+        }
 
         entries.removeAll()
         sessionGeneration &+= 1
         if metadata.isConfigured, !isFailed {
             state = .locked
         }
+
+        guard phase == .background else { return }
+
+        systemAuthenticationGeneration &+= 1
+        if systemAuthenticationInFlight {
+            systemAuthenticationRequiresPIN = true
+        }
+        resumeSystemAuthenticationActivationWaiter()
     }
 
     /// Creates the local PIN credential and commits configured history security metadata.
@@ -303,6 +335,7 @@ final class HistoryVault: ObservableObject {
                 return .success
             }
             state = .unlocked
+            systemAuthenticationRequiresPIN = false
             return .success
         } catch {
             entries.removeAll()
@@ -317,44 +350,94 @@ final class HistoryVault: ObservableObject {
               metadata.localAuthenticationEnabled,
               sceneIsActive,
               state == .locked,
-              !isFailed else {
+              !isFailed,
+              !systemAuthenticationRequiresPIN,
+              !systemAuthenticationInFlight else {
             return .failed
         }
 
         let operationGeneration = resetGeneration
-        let operationSession = sessionGeneration
+        let operationAuthenticationGeneration = systemAuthenticationGeneration
+        systemAuthenticationInFlight = true
+        defer { systemAuthenticationInFlight = false }
         let result = await authenticator.authenticate(reason: "Unlock your private passphrase history.")
-        guard result == .success else { return result }
 
-        guard operationGeneration == resetGeneration,
-              metadata.isConfigured else {
-            entries.removeAll()
-            return .failed
+        guard isCurrentSystemAuthentication(
+            operationGeneration: operationGeneration,
+            operationAuthenticationGeneration: operationAuthenticationGeneration
+        ) else {
+            return staleSystemAuthenticationResult()
         }
 
-        guard sceneIsActive, sessionGeneration == operationSession else {
-            entries.removeAll()
-            state = .locked
-            return .success
+        guard result == .success else { return result }
+
+        await waitForSystemAuthenticationActivation()
+
+        guard isCurrentSystemAuthentication(
+                  operationGeneration: operationGeneration,
+                  operationAuthenticationGeneration: operationAuthenticationGeneration
+              ),
+              sceneIsActive,
+              state == .locked else {
+            return staleSystemAuthenticationResult()
         }
 
         do {
             entries = try await store.loadEntries()
-            guard operationGeneration == resetGeneration,
+            guard isCurrentSystemAuthentication(
+                      operationGeneration: operationGeneration,
+                      operationAuthenticationGeneration: operationAuthenticationGeneration
+                  ),
                   sceneIsActive,
-                  sessionGeneration == operationSession,
-                  metadata.isConfigured else {
-                entries.removeAll()
-                if metadata.isConfigured, !isFailed { state = .locked }
-                return .success
+                  state == .locked else {
+                return staleSystemAuthenticationResult()
             }
             state = .unlocked
             return .success
         } catch {
+            guard isCurrentSystemAuthentication(
+                      operationGeneration: operationGeneration,
+                      operationAuthenticationGeneration: operationAuthenticationGeneration
+                  ),
+                  sceneIsActive,
+                  state == .locked else {
+                return staleSystemAuthenticationResult()
+            }
             entries.removeAll()
             fail(.storage)
             return .failed
         }
+    }
+
+    private func isCurrentSystemAuthentication(
+        operationGeneration: UInt,
+        operationAuthenticationGeneration: UInt
+    ) -> Bool {
+        operationGeneration == resetGeneration
+            && operationAuthenticationGeneration == systemAuthenticationGeneration
+            && metadata.isConfigured
+            && !isFailed
+            && !Task.isCancelled
+    }
+
+    private func waitForSystemAuthenticationActivation() async {
+        guard !sceneIsActive else { return }
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            if sceneIsActive {
+                continuation.resume()
+            } else {
+                systemAuthenticationActivationWaiter = continuation
+            }
+        }
+    }
+
+    private func resumeSystemAuthenticationActivationWaiter() {
+        systemAuthenticationActivationWaiter?.resume()
+        systemAuthenticationActivationWaiter = nil
+    }
+
+    private func staleSystemAuthenticationResult() -> HistoryAuthenticationResult {
+        return .stale
     }
 
     /// Records a successful generated-passphrase copy without requiring the history list to be unlocked.
@@ -593,8 +676,11 @@ final class HistoryVault: ObservableObject {
     func resetHistory() async {
         resetGeneration &+= 1
         sessionGeneration &+= 1
+        systemAuthenticationGeneration &+= 1
+        resumeSystemAuthenticationActivationWaiter()
         entries.removeAll()
         lockoutUntil = nil
+        systemAuthenticationRequiresPIN = false
         migration.discardLegacyHistory()
 
         let cleared = await clearPersistedState()
@@ -741,6 +827,8 @@ final class HistoryVault: ObservableObject {
     }
 
     private func fail(_ failure: HistoryVaultFailure) {
+        systemAuthenticationGeneration &+= 1
+        resumeSystemAuthenticationActivationWaiter()
         entries.removeAll()
         state = .failed(failure)
     }
