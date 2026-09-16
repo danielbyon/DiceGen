@@ -33,6 +33,9 @@ struct ChangeHistoryPINView: View {
                 SecureField("Confirm New PIN", text: $confirmationPIN)
                     .keyboardType(.numberPad)
                     .textContentType(.newPassword)
+            }
+
+            Section {
                 Button("Change PIN") {
                     changePIN()
                 }
