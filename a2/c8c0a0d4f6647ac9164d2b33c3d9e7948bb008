@@ -1,0 +1,64 @@
+DiceGenUITests/HistoryUITests.swift
+  s_8f9ab1d92b6241::t_1f7f2cc89e075a 192
+  s_8f9ab1d92b6241::t_66b3b25541cc6e 211
+  s_8f9ab1d92b6241::t_9aa26d8f1229eb 140-146
+  s_8f9ab1d92b6241::t_b378ed6340b45e 209
+  s_8f9ab1d92b6241::t_69def857831539 212
+  s_8f9ab1d92b6241::t_e233f2eb61785c 193-208,214-218,283
+  s_8f9ab1d92b6241::t_ed9909da28d123 50-57,59-64
+  s_8f9ab1d92b6241::t_ab2d491c9f579c 58
+  s_8f9ab1d92b6241::t_d8537798a11501 210,213,278-282
+DiceGen/Views/History/ChangeHistoryPINView.swift
+  s_8f9ab1d92b6241::t_188316e492094e 53
+DiceGen/DiceGenApp.swift
+  s_8f9ab1d92b6241::t_6a9a6003112bf5 210
+  s_8f9ab1d92b6241::t_e233f2eb61785c 89-91,107-110,194,206
+  s_8f9ab1d92b6241::t_a2537cc451a347 6,156-191,197-205,207-209
+DiceGenTests/HistoryVaultTests.swift
+  s_8f9ab1d92b6241::t_739205d288d950 510-512,514,526-550,555-580,583-591
+  s_8f9ab1d92b6241::t_55ba92b9ff4840 513,515,517,519,522-525,592-596,598-604,606-610,612-613,615,618-687,760-778,781-789,793-819,822-826,1430
+  s_8f9ab1d92b6241::t_bf8168285df9b8 597,1403,1406-1407,1427-1429
+  s_8f9ab1d92b6241::t_bc4d4f7a2b04cc 688-707,710-723,726-759
+  s_8f9ab1d92b6241::t_b3eaeef638ed30 708-709,724-725
+  s_8f9ab1d92b6241::t_ec1a68d3371221 516,518,520,611,614,616-617,779-780,790-791,820-821
+  s_8f9ab1d92b6241::t_c4a0e68baaaf8b 521
+DiceGen/History/HistoryAuthenticator.swift
+  s_8f9ab1d92b6241::t_5d81db48b365c4 14
+DiceGen/History/HistoryVault.swift
+  s_8f9ab1d92b6241::t_ec1ada449514ec 34-40
+  s_8f9ab1d92b6241::t_f5b1a2bf3b7bcf 353-355,361-362,372
+  s_8f9ab1d92b6241::t_00d0030908b547 48,60,108,175
+  s_8f9ab1d92b6241::t_b6ce30c54c4328 683
+  s_8f9ab1d92b6241::t_a2537cc451a347 369,393,431,437-441
+  s_8f9ab1d92b6241::t_6d0d91801976a7 338
+  s_8f9ab1d92b6241::t_9992e31eae583a 61-62,104-105,163,165-174,182-189,360,365-368,373-382,387-390,392,398-405,412-430,432-436,679-680,830-831
+  s_8f9ab1d92b6241::t_25bdd52f51b6ad 47
+  s_8f9ab1d92b6241::t_6ddfb180fefd5a 442
+DiceGen/Views/History/HistoryUnlockView.swift
+  s_8f9ab1d92b6241::t_9992e31eae583a 76
+  s_8f9ab1d92b6241::t_63f42f4ccaaabf 80-85
+  s_8f9ab1d92b6241::t_cb0ef2d4de49a1 119-124
+  s_8f9ab1d92b6241::t_25bdd52f51b6ad 105-112
+DiceGen/Views/ContentView.swift
+  s_8f9ab1d92b6241::t_01b0c478ffc7af 31
+  s_8f9ab1d92b6241::t_9992e31eae583a 41,53,62-71
+  s_8f9ab1d92b6241::t_e5c161f98c9e8b 72-74
+DiceGen/Views/History/PassphraseHistoryView.swift
+  s_8f9ab1d92b6241::t_1859bc0af6770a 35-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a2c8c0a0d4f6647ac9164d2b33c3d9e7948bb008",
+  "prompts": {},
+  "sessions": {
+    "s_8f9ab1d92b6241": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0a1f1-0966-7192-a854-a769af00e327",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Daniel Byon <daniel@danielbyon.com>"
+    }
+  }
+}
