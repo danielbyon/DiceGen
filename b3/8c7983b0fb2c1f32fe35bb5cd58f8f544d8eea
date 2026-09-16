@@ -1,0 +1,19 @@
+DiceGen/Views/History/ChangeHistoryPINView.swift
+  s_8f9ab1d92b6241::t_c447623baa0ae2 36-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b38c7983b0fb2c1f32fe35bb5cd58f8f544d8eea",
+  "prompts": {},
+  "sessions": {
+    "s_8f9ab1d92b6241": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0a1f1-0966-7192-a854-a769af00e327",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Daniel Byon <daniel@danielbyon.com>"
+    }
+  }
+}
