@@ -1,0 +1,9 @@
+{
+  "id" : "7853d98d-0f40-4dd2-9cd2-bffeb43675ff",
+  "targets" : [
+    {
+      "id" : "ea1538b4-3cb1-499d-b283-092f08fb8ed1",
+      "name" : "DiceGen"
+    }
+  ]
+}
