@@ -1,0 +1,14 @@
+DiceGen.xcodeproj/project.pbxproj
+  h_a1fa5c19d60fed 712,745
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "943d64ed7d6cbfa14eb82ac178fd83ee82a4d3ee",
+  "prompts": {},
+  "humans": {
+    "h_a1fa5c19d60fed": {
+      "author": "Daniel Byon <daniel@danielbyon.com>"
+    }
+  }
+}
