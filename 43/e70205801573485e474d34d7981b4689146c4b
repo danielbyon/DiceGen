@@ -1,0 +1,18 @@
+DiceGen.xcodeproj/project.pbxproj
+  h_a1fa5c19d60fed 42,45,48-49,51,118,121,124-125,127,328-340,712,722,745,756
+DiceGen.xcodeproj/xcshareddata/xcodecloud/manifest.json
+  h_a1fa5c19d60fed 1-9
+DiceGen/Info.plist
+  h_a1fa5c19d60fed 25-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "43e70205801573485e474d34d7981b4689146c4b",
+  "prompts": {},
+  "humans": {
+    "h_a1fa5c19d60fed": {
+      "author": "Daniel Byon <daniel@danielbyon.com>"
+    }
+  }
+}
